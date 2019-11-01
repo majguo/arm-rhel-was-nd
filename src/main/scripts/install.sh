@@ -64,6 +64,13 @@ unzip "$imKitName" -d im_installer
     -enableAdminSecurity true -adminUserName "$adminUserName" -adminPassword "$adminPassword"
 /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/startServer.sh server1
 
+# Open ports by adding iptables rules
+firewall-cmd --zone=public --add-port=9060/tcp --permanent
+firewall-cmd --zone=public --add-port=9080/tcp --permanent
+firewall-cmd --zone=public --add-port=9043/tcp --permanent
+firewall-cmd --zone=public --add-port=9443/tcp --permanent
+firewall-cmd --reload
+
 # Configure JDBC provider and data soruce for IBM DB2 Server if required
 if [ ! -z "$db2ServerName" ] && [ ! -z "$db2ServerPortNumber" ] && [ ! -z "$db2DBName" ] && [ ! -z "$db2DBUserName" ] && [ ! -z "$db2DBUserPwd" ]; then
     wget "$scriptLocation"db2/create-ds.sh
