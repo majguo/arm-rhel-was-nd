@@ -1,0 +1,54 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ibmUserId": {
+            "value": "${ibmUserId}"
+        },
+        "ibmUserPwd": {
+            "value": "${ibmUserPwd}"
+        },
+        "adminUser": {
+            "value": "${adminUser}"
+        },
+        "adminPwd": {
+            "value": "${adminPwd}"
+        },
+        "vmAdminId": {
+            "value": "${vmAdminId}"
+        },
+        "vmAdminPwd": {
+            "value": "${vmAdminPwd}"
+        },
+        "dnsLabelPrefix":{
+            "value": "${dnsLabelPrefix}"
+        },
+        "virtualMachineName": {
+            "value": "${virtualMachineName}"
+        },
+        "virtualNetworkName": {
+            "value": "${virtualNetworkName}"
+        },
+        "addressPrefix": {
+            "value": "${addressPrefix}"
+        },
+        "subnetName": {
+            "value": "${subnetName}"
+        },
+        "subnetAddressPrefix": {
+            "value": "${subnetAddressPrefix}"
+        },
+        "connectToDB2Server": {
+            "value": "${connectToDB2Server}"
+        },
+        "db2ConnConfig": {
+            "value": {
+                "serverName": "${db2ServerName}",
+                "portNumber": "${db2ServerPortNumber}",
+                "dBName": "${db2DBName}",
+                "dBUserName": "${db2DBUserName}",
+                "dBUserPwd": "${db2DBUserPwd}"
+            }
+        }
+    }
+}

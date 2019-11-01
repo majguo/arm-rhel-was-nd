@@ -1,0 +1,278 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {
+                "name": "dnsLabelPrefix",
+                "type": "Microsoft.Common.TextBox",
+                "label": "DNS Label Prefix",
+                "toolTip": "The string to prepend to the DNS label.",
+                "defaultValue": "wasnd",
+                "constraints": {
+                    "required": true,
+                    "regex": "^[a-z0-9A-Z]{3,79}$",
+                    "validationMessage": "The prefix must be between 3 and 79 characters long and contain letters, numbers only."
+                }
+            }
+        ],
+        "steps": [
+            {
+                "name": "VirtualMachineConfig",
+                "label": "Virtual Machine Settings",
+                "subLabel": {
+                    "preValidation": "Configure the resources and settings of the virtual machine that installs IBM WebSphere.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Virtual Machine Settings",
+                "elements": [
+                    {
+                        "name": "vmSizeSelect",
+                        "type": "Microsoft.Compute.SizeSelector",
+                        "label": "Virtual machine size",
+                        "toolTip": "The size of virtual machine to provision.",
+                        "recommendedSizes": [
+                            "Standard_A1",
+                            "Standard_A2",
+                            "Standard_A3",
+                            "Standard_A4"
+                        ],
+                        "osPlatform": "Linux",
+                        "count": "1"
+                    }
+                ]
+            },
+            {
+                "name": "Prerequisites",
+                "label": "Prerequisites for WebSphere Creation",
+                "subLabel": {
+                    "preValidation": "Provide Prerequisites Required for WebSphere Creation",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Prerequisites for WebSphere Creation",
+                "elements": [
+                    {
+                        "name": "Credentials",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Credentials for WebSphere Creation",
+                        "elements": [
+                            {
+                                "name": "IBMidUsername",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "IBMid Username",
+                                "toolTip": "The username of a pre-existing IBMid.",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+                                    "validationMessage": "The value must be a valid email address."
+                                }
+                            },
+                            {
+                                "name": "IBMidPassword",
+                                "type": "Microsoft.Common.PasswordBox",
+                                "label": {
+                                    "password": "Password for IBMid",
+                                    "confirmPassword": "Confirm password"
+                                },
+                                "toolTip": "Password for IBMid",
+                                "constraints": {
+                                  "required": true
+                                }
+                            },
+                            {
+                                "name": "acceptIBMLicenseAgreement",
+                                "label": "Accept IBM License Agreement",
+                                "type": "Microsoft.Common.TextBox",
+                                "toolTip": "A value not equal to Y/y indicates you do not accept the IBM License Agreement. In that case the deployment will not proceed.",
+                                "defaultValue": "Y",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[Yy]$",
+                                    "validationMessage": "The value must be Y/y to proceed with deployment."
+                                }
+                            },
+                            {
+                                "name": "adminUsername",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Username for admin account of VM",
+                                "defaultValue": "websphere",
+                                "toolTip": "Use only allowed characters",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z]{1,30}$",
+                                    "validationMessage": "The value must be 1-30 characters long and must only contain letters and numbers."
+                                }
+                            },
+                            {
+                                "name": "adminPassword",
+                                "type": "Microsoft.Common.PasswordBox",
+                                "label": {
+                                    "password": "Password for admin account of VM",
+                                    "confirmPassword": "Confirm password"
+                                },
+                                "toolTip": "Password for admin account of Virtual Machine",
+                                "constraints": {
+                                    "required": true
+                                }
+                            },
+                            {
+                                "name": "wasAdminUsername",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Username for admin account of WebSphere",
+                                "defaultValue": "wasadmin",
+                                "toolTip": "Use only allowed characters",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z]{1,30}$",
+                                    "validationMessage": "The value must be 1-30 characters long and must only contain letters and numbers."
+                                }
+                            },
+                            {
+                                "name": "wasAdminPassword",
+                                "type": "Microsoft.Common.PasswordBox",
+                                "label": {
+                                    "password": "Password for admin account of WebSphere",
+                                    "confirmPassword": "Confirm password"
+                                },
+                                "toolTip": "Password for admin account of WebSphere",
+                                "constraints": {
+                                    "required": true
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "name": "IBMInstallKit",
+                        "type": "Microsoft.Common.Section",
+                        "label": "IBM Installation Manager Installation Kit V1.9",
+                        "elements": [
+                            {
+                                "name": "uri",
+                                "type": "Microsoft.Common.TextBox",
+                                "toolTip": "You can download it from IBM web site with your IBMid account, upload to Azure Storage and make it available by generating SAS.",
+                                "label": "The Uri to the accessible IBM Installation Manager Installation Kit V1.9",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^(https?:\/\/)?([\\w-])+\\.([a-zA-Z]{2,63})([\/\\w-]*)*\/?\\??([^#\n\r]*)?#?([^\n\r]*)?$",
+                                    "validationMessage": "The value must be a valid URI."
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "DB2ServerConnectionConfig",
+                "label": "IBM DB2 Server Connection Settings",
+                "subLabel": {
+                    "preValidation": "Configure the connection to IBM DB2 Server.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "IBM DB2 Server Connection Settings",
+                "elements": [
+                    {
+                        "name": "connectToDB2Server",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Connect to DB2 Server?",
+                        "defaultValue": "Yes",
+                        "toolTip": "Select 'Yes' and provide required info to configure the connection to IBM DB2 Server.",
+                        "constraints": {
+                        "allowedValues": [
+                            {
+                                "label": "Yes",
+                                "value": "true"
+                            },
+                            {
+                                "label": "No",
+                                "value": "false"
+                            }
+                        ],
+                        "required": true
+                        }
+                    },
+                    {
+                        "name": "connectionInfo",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Connection Settings",
+                        "elements": [
+                            {
+                                "name": "db2ServerName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "DNS name or IP address",
+                                "toolTip": "The DNS name/IP address of a pre-existing IBM DB2 Server.",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^((\\*)|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((\\*\\.)?([a-zA-Z0-9-]+\\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\\.[a-zA-Z]{2,63}?))$",
+                                    "validationMessage": "The value must be a valid DNS name or IP address."
+                                }
+                            },
+                            {
+                                "name": "db2ServerPortNumber",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Port number",
+                                "toolTip": "The port number of a pre-existing IBM DB2 Server.",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[0-9]+$",
+                                    "validationMessage": "The value must be numbers."
+                                }
+                            },
+                            {
+                                "name": "db2DBName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Databae name",
+                                "toolTip": "The database name of a pre-existing IBM DB2 Server.",
+                                "constraints": {
+                                    "required": true                                
+                                }
+                            },
+                            {
+                                "name": "db2DBUserName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Username of database",
+                                "toolTip": "The database username of a pre-existing IBM DB2 Server.",
+                                "constraints": {
+                                    "required": true
+                                }
+                            },
+                            {
+                                "name": "db2DBUserPwd",
+                                "type": "Microsoft.Common.PasswordBox",
+                                "label": {
+                                    "password": "Password for database user",
+                                    "confirmPassword": "Confirm password"
+                                },
+                                "toolTip": "The password for the database user.",
+                                "constraints": {
+                                    "required": true
+                                }
+                            }
+                        ],
+                        "visible": "[bool(steps('DB2ServerConnectionConfig').connectToDB2Server)]"
+                    }
+                ]
+            }
+        ],
+        "outputs": {
+            "location": "[location()]",
+            "dnsLabelPrefix": "[basics('dnsLabelPrefix')]",
+            "vmSize": "[steps('VirtualMachineConfig').vmSizeSelect]",
+            "ibmUserId": "[steps('Prerequisites').Credentials.IBMidUsername]",
+            "ibmUserPwd": "[steps('Prerequisites').Credentials.IBMidPassword]",
+            "vmAdminId": "[steps('Prerequisites').Credentials.adminUsername]",
+            "vmAdminPwd": "[steps('Prerequisites').Credentials.adminPassword]",
+            "adminUser": "[steps('Prerequisites').Credentials.wasAdminUsername]",
+            "adminPwd": "[steps('Prerequisites').Credentials.wasAdminPassword]",
+            "installKitUri": "[steps('Prerequisites').IBMInstallKit.uri]",
+            "connectToDB2Server": "[steps('DB2ServerConnectionConfig').connectToDB2Server]",
+            "db2ConnConfig": {
+                "serverName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2ServerName]",
+                "portNumber": "[steps('DB2ServerConnectionConfig').connectionInfo.db2ServerPortNumber]",
+                "dBName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBName]",
+                "dBUserName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBUserName]",
+                "dBUserPwd": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBUserPwd]"
+            }
+        }
+    }
+}
