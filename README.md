@@ -11,7 +11,7 @@
  ## Steps of deployment
  1. Checkout [azure-javaee-iaas](https://github.com/Azure/azure-javaee-iaas)
     - change to directory hosting the repo project & run `mvn clean install`
- 2. Checkout [azure-quickstart-templates repo](https://github.com/Azure/azure-quickstart-templates) under the specified parent directory
+ 2. Checkout [azure-quickstart-templates](https://github.com/Azure/azure-quickstart-templates) under the specified parent directory
  3. Checkout this repo under the same parent directory and change to directory hosting the repo project
  4. Build the project by replacing all placeholder `${<place_holder>}` with valid values
     - if you want to connect DB2 Server to your WebSphere server, provide valid DNS name/IP address, port number, database name, user name & password of a running & accessible DB2 server for parameters `db2ServerName`, `db2ServerPortNumber`, `db2DBName`, `db2DBUserName` & `db2DBUserPwd`
