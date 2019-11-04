@@ -1,8 +1,8 @@
 # What is this stuff?
 
-- Content that required to create an Azure applicatoin offer.
-- See [Azure applicatoin offer](https://docs.microsoft.com/en-us/azure/marketplace/cloud-partner-portal/azure-applications/cpp-azure-app-offer) for details.
-- When submitting the offer, use content from [this directory](https://github.com/majguo/arm-rhel-was-nd/tree/master/src/main/resources) (To-Be-Changed), but apply the changes in this file on top.
+- Content that required to create an Azure applicatoin offer
+- See [Azure applicatoin offer](https://docs.microsoft.com/en-us/azure/marketplace/cloud-partner-portal/azure-applications/cpp-azure-app-offer) for details
+- When submitting the offer, use content from [this directory](https://github.com/majguo/arm-rhel-was-nd/tree/master/src/main/resources) (To-Be-Changed), but apply the changes in this file on top
 
 ## Offer Settings
 
@@ -95,7 +95,7 @@
 
 - None
 
-### Legal ???
+### Legal
 
 - Privacy policy URL
   - https://www.ibm.com/privacy/us/en/ ???
@@ -143,7 +143,7 @@
 
 ## Support
 
-### Engineering Contact ???
+### Engineering Contact
 
 - Name
   - Jianguo Ma ???
@@ -152,7 +152,7 @@
 - Phone
   - 862161880177 ???
 
-### Customer Support ???
+### Customer Support
 
 - Name
   - Jianguo Ma ???
@@ -163,6 +163,6 @@
 
 ### Support Urls
 
-- Public Azure: https://support.oracle.com/
-- Government Azure: https://support.oracle.com/
+- Public Azure: https://www.ibm.com/developerworks/websphere/support/
+- Government Azure: https://www.ibm.com/developerworks/websphere/support/
 
