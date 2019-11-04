@@ -159,7 +159,7 @@ if [[ $( az storage blob exists -n "$fileName" -c "$storageContainerName" --acco
 	set -e
 	(
 		set -x
-		az storage blob upload -f "$installKitFile" -c $storageContainerName -n "$fileName" --account-name "$storageAccountName" --account-key "$storageAccountKey" >/dev/null 2>&1
+		az storage blob upload -f "$installKitFile" -c $storageContainerName -n "$fileName" --account-name "$storageAccountName" --account-key "$storageAccountKey"
 	)
 	else
 	echo "Using existing storage blob..."

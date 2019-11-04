@@ -9,8 +9,8 @@ db2ServerName=$6 #Host name/IP address of IBM DB2 Server
 db2ServerPortNumber=$7 #Server port number of IBM DB2 Server
 db2DBName=$8 #Database name of IBM DB2 Server
 db2DBUserName=$9 #Database user name of IBM DB2 Server
-db2DBUserPwd=$10 #Database user password of IBM DB2 Server
-scriptLocation=$11 #Script location ends in a trailing slash
+db2DBUserPwd=${10} #Database user password of IBM DB2 Server
+scriptLocation=${11} #Script location ends in a trailing slash
 
 # Variables
 createDSFileUri="$scriptLocation"db2/create-ds.py
