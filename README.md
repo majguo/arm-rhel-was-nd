@@ -1,4 +1,4 @@
-# Deploy a RHEL VM on Azure with IBM WebSphere Application Server ND Traditional V9.0.5.1 pre-installed
+# Deploy a RHEL 7.4 VM on Azure with IBM WebSphere Application Server ND Traditional V9.0.5.1 pre-installed
 
 ## Prerequisites
  - Register an [Azure subscription](https://azure.microsoft.com/en-us/)
