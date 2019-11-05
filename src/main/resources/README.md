@@ -66,7 +66,7 @@
 - Long Summary
   - Provisions a Single Node IBM WebSphere Application Server ND Traditional V9.0.5.1 on RedHat Enterprise Linux 7.4
 - Description
-  - IBM WebSphere Application Server Network Deployment provides a flexible, secure server runtime environment for large-scale and mission critical application deployments. This offer provisions a Single Node IBM WebSphere Application Server ND Traditional V9.0.5.1 on RedHat Enterprise Linux 7.4.
+  - IBM WebSphere Application Server Network Deployment provides a flexible, secure server runtime environment for large-scale and mission critical application deployments. This offer provisions a Single Node IBM WebSphere Application Server ND Traditional V9.0.5.1 on RedHat Enterprise Linux 7.4. ???
 - Offer available to Microsoft CSP Reseller channel?
   - No
 - Marketing identifier 
@@ -78,7 +78,7 @@
 
 - [Overview](https://www.ibm.com/support/knowledgecenter/en/SSAW57_9.0.5/com.ibm.websphere.nd.multiplatform.doc/ae/welc6productov.html)
 - [Learn more](https://www.ibm.com/cloud/websphere-application-platform)
-- [Documentation](https://github.com/majguo/arm-rhel-was-nd)
+- [Documentation](https://github.com/majguo/arm-rhel-was-nd) ???
 - [Pricing (Bring Your Own WebSphere Server License, pay as you go for Azure resources)](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) ???
 - [IBM pricing policy](http://www-01.ibm.com/software/passportadvantage/eligible_public_cloud_BYOSL_policy.html) ???
 
@@ -105,7 +105,7 @@
 
 ### Lead Management
 
-- None
+- None (TBD)
 
 ### Legal
 
