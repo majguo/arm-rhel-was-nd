@@ -37,7 +37,8 @@
 - Version
   - 1.0.0
 - Package file (.zip)
-  - `mvn clean build`
+  - Run `mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install`
+  - Find "arm-rhel-was-nd-1.0.0-arm-assembly.zip" in the "target" directory
 
 ## Test Drive
 

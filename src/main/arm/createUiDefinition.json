@@ -33,6 +33,7 @@
                         "label": "Virtual machine size",
                         "toolTip": "The size of virtual machine to provision.",
                         "recommendedSizes": [
+                            "Standard_D2_v3",
                             "Standard_A1",
                             "Standard_A2",
                             "Standard_A3",

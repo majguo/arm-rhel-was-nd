@@ -28,7 +28,7 @@
             "type": "string"
         },
         "vmSize": {
-            "defaultValue": "Standard_A1",
+            "defaultValue": "Standard_D2_v3",
             "type": "string"
         },
         "osDiskType": {
