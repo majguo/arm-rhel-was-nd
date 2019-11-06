@@ -40,7 +40,7 @@
             "type": "string"
         },
         "virtualNetworkName": {
-            "defaultValue": "[concat(resourceGroup().name,'-vnet')]",
+            "defaultValue": "[concat(resourceGroup().name,'-wasnd-vnet')]",
             "type": "string"
         },
         "addressPrefix": {
@@ -60,7 +60,7 @@
             "type": "bool"
         },
         "networkSecurityGroupName": {
-            "defaultValue": "[concat(resourceGroup().name,'-',parameters('subnetName'),'-nsg')]",
+            "defaultValue": "[concat(resourceGroup().name,'-wasnd-nsg')]",
             "type": "string"
         },
         "location":{
