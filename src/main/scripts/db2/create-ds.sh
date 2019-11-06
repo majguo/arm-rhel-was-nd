@@ -32,7 +32,7 @@ sed -i "s/\${DB2_SERVER_NAME}/${db2ServerName}/g" "$createDSFileName"
 sed -i "s/\${PORT_NUMBER}/${db2ServerPortNumber}/g" "$createDSFileName"
 
 # Create JDBC provider and data source using jython file
-"$wasRootPath"/bin/wsadmin.sh -lang jython -username "$wasAdminUserName" -password "$wasAdminPwd" -f "$createDSFileName"
+"$wasRootPath"/bin/wsadmin.sh -lang jython -f "$createDSFileName"
 
 # Restart server
 systemctl restart "$websphereSrv"
