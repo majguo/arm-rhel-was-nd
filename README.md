@@ -31,3 +31,9 @@
 ## After deployment
 - If you check the resource group in [azure portal](https://portal.azure.com/), you will see related resources created
 - Open VM resource blade and copy its DNS name, then open IBM WebSphere Integrated Solutions Console for further administration by browsing https://<dns_name>:9043/ibm/console
+- The WebSphere server will be automatically started whenever the virtual machine is rebooted. In case you want to mannually stop/start/restart the server, using the following commands:
+  ```
+  systemctl stop websphere    # stop WebSphere server
+  systemctl start websphere   # start WebSphere server
+  systemctl restart websphere # restart WebSphere server
+  ```
