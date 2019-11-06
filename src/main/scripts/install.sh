@@ -68,9 +68,12 @@ soapClientProps=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/properties/soap.client
 sed -i "s/com.ibm.SOAP.securityEnabled=false/com.ibm.SOAP.securityEnabled=true/g" "$soapClientProps"
 sed -i "s/com.ibm.SOAP.loginUserid=/com.ibm.SOAP.loginUserid=${adminUserName}/g" "$soapClientProps"
 sed -i "s/com.ibm.SOAP.loginPassword=/com.ibm.SOAP.loginPassword=${adminPassword}/g" "$soapClientProps"
-
 # Encrypt com.ibm.SOAP.loginPassword
 /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/PropFilePasswordEncoder.sh "$soapClientProps" com.ibm.SOAP.loginPassword
+
+# Create server
+/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/startServer.sh server1
+/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/stopServer.sh server1
 
 # Add systemd unit file for websphere.service
 srvName=websphere
