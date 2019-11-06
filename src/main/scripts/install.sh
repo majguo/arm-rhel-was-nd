@@ -71,9 +71,15 @@ sed -i "s/com.ibm.SOAP.loginPassword=/com.ibm.SOAP.loginPassword=${adminPassword
 # Encrypt com.ibm.SOAP.loginPassword
 /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/PropFilePasswordEncoder.sh "$soapClientProps" com.ibm.SOAP.loginPassword
 
-# Create server
+# Create and start server
 /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/startServer.sh server1
-/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/stopServer.sh server1
+
+# Configure JDBC provider and data soruce for IBM DB2 Server if required
+if [ ! -z "$db2ServerName" ] && [ ! -z "$db2ServerPortNumber" ] && [ ! -z "$db2DBName" ] && [ ! -z "$db2DBUserName" ] && [ ! -z "$db2DBUserPwd" ]; then
+    wget "$scriptLocation"db2/create-ds.sh
+    chmod u+x create-ds.sh
+    ./create-ds.sh /opt/IBM/WebSphere/ND/V9 AppSrv1 server1 "$db2ServerName" "$db2ServerPortNumber" "$db2DBName" "$db2DBUserName" "$db2DBUserPwd" "$scriptLocation"
+fi
 
 # Add systemd unit file for websphere.service
 srvName=websphere
@@ -91,6 +97,7 @@ echo "WantedBy=default.target" >> "$websphereSrv"
 chmod a+x "$websphereSrv"
 
 # Enable and start websphere service
+/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/stopServer.sh server1
 systemctl daemon-reload
 systemctl enable "$srvName"
 systemctl start "$srvName"
@@ -101,10 +108,3 @@ firewall-cmd --zone=public --add-port=9080/tcp --permanent
 firewall-cmd --zone=public --add-port=9043/tcp --permanent
 firewall-cmd --zone=public --add-port=9443/tcp --permanent
 firewall-cmd --reload
-
-# Configure JDBC provider and data soruce for IBM DB2 Server if required
-if [ ! -z "$db2ServerName" ] && [ ! -z "$db2ServerPortNumber" ] && [ ! -z "$db2DBName" ] && [ ! -z "$db2DBUserName" ] && [ ! -z "$db2DBUserPwd" ]; then
-    wget "$scriptLocation"db2/create-ds.sh
-    chmod u+x create-ds.sh
-    ./create-ds.sh "$srvName" /opt/IBM/WebSphere/ND/V9 AppSrv1 server1 "$db2ServerName" "$db2ServerPortNumber" "$db2DBName" "$db2DBUserName" "$db2DBUserPwd" "$scriptLocation"
-fi
