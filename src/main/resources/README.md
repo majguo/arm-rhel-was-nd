@@ -9,7 +9,7 @@
 - Offer Id
   - 20191106-arm-rhel-was-nd
 - Publisher ID
-  - ibm ???
+  - ???
 - Name
   - IBM WebSphere Server ND Traditional V9.0.5.1
 
@@ -122,20 +122,20 @@
 ### Engineering Contact
 
 - Name
-  - Jianguo Ma ???
+  - ???
 - Email
-  - jiangma@microsoft.com ???
+  - ???
 - Phone
-  - 862161880177 ???
+  - ???
 
 ### Customer Support
 
 - Name
-  - Jianguo Ma ???
+  - ???
 - Email
-  - jiangma@microsoft.com ???
+  - ???
 - Phone
-  - 862161880177 ???
+  - ???
 
 ### Support Urls
 
