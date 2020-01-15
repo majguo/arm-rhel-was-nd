@@ -78,7 +78,7 @@ if [ -z "$deploymentName" ] || [ ! -f "$installKitFile" ] || [ -z "$subscription
 fi
 
 #templateFile Path - template file to be used
-templateFilePath="../arm/mainTemplate.json"
+templateFilePath="./mainTemplate.json"
 
 if [ ! -f "$templateFilePath" ]; then
 	echo "$templateFilePath not found"
@@ -86,7 +86,7 @@ if [ ! -f "$templateFilePath" ]; then
 fi
 
 #parameter file path
-parametersFilePath="../arm/parameters.json"
+parametersFilePath="./parameters.json"
 
 if [ ! -f "$parametersFilePath" ]; then
 	echo "$parametersFilePath not found"
@@ -179,11 +179,6 @@ installKitUri=$blobEndpoint$storageContainerName/"$fileName"?$sasToken
 parametersJson=$( cat $parametersFilePath | jq '.parameters' )
 parametersJson=$( echo "$parametersJson" | jq --arg uri "$installKitUri" '{"installKitUri": {"value":$uri}} + .' )
 parametersJson=$( echo "$parametersJson" | jq -c '.' )
-
-vnetName=$( echo "$parametersJson" | jq -r '.virtualNetworkName.value' )
-if [[ $(az network vnet list -g "$resourceGroupName" --query "[?name=='${vnetName}']" -o json | jq -r '. | length') -gt 0 ]]; then
-	parametersJson=$( echo "$parametersJson" | jq -c '{"virtualNetworkExisted": {"value":true}} + .' )
-fi
 
 #Start deployment
 echo "Starting deployment..."

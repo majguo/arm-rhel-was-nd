@@ -2,17 +2,17 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "_artifactsLocation": {
+            "value": "${artifactsLocationBase}/${project.artifactId}/${git.tag}/src/main/"
+        },
+        "dnsLabelPrefix":{
+            "value": "${dnsLabelPrefix}"
+        },
         "ibmUserId": {
             "value": "${ibmUserId}"
         },
         "ibmUserPwd": {
             "value": "${ibmUserPwd}"
-        },
-        "adminUser": {
-            "value": "${adminUser}"
-        },
-        "adminPwd": {
-            "value": "${adminPwd}"
         },
         "vmAdminId": {
             "value": "${vmAdminId}"
@@ -20,23 +20,11 @@
         "vmAdminPwd": {
             "value": "${vmAdminPwd}"
         },
-        "dnsLabelPrefix":{
-            "value": "${dnsLabelPrefix}"
+        "adminUser": {
+            "value": "${adminUser}"
         },
-        "virtualMachineName": {
-            "value": "${virtualMachineName}"
-        },
-        "virtualNetworkName": {
-            "value": "${virtualNetworkName}"
-        },
-        "addressPrefix": {
-            "value": "${addressPrefix}"
-        },
-        "subnetName": {
-            "value": "${subnetName}"
-        },
-        "subnetAddressPrefix": {
-            "value": "${subnetAddressPrefix}"
+        "adminPwd": {
+            "value": "${adminPwd}"
         },
         "connectToDB2Server": {
             "value": "${connectToDB2Server}"
