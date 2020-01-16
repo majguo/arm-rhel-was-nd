@@ -287,5 +287,11 @@
                 }
             }
         }
-    ]
+    ],
+    "outputs": {
+        "adminSecuredConsole": {
+            "type": "string",
+            "value": "[concat('https://',reference(variables('publicIPAddressName')).dnsSettings.fqdn,':9043/ibm/console')]"
+        }
+    }
 }
