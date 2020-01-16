@@ -266,14 +266,12 @@
             "adminUser": "[steps('Prerequisites').Credentials.wasAdminUsername]",
             "adminPwd": "[steps('Prerequisites').Credentials.wasAdminPassword]",
             "installKitUri": "[steps('Prerequisites').IBMInstallKit.uri]",
-            "connectToDB2Server": "[steps('DB2ServerConnectionConfig').connectToDB2Server]",
-            "db2ConnConfig": {
-                "serverName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2ServerName]",
-                "portNumber": "[steps('DB2ServerConnectionConfig').connectionInfo.db2ServerPortNumber]",
-                "dBName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBName]",
-                "dBUserName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBUserName]",
-                "dBUserPwd": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBUserPwd]"
-            }
+            "connectToDB2Server": "[bool(steps('DB2ServerConnectionConfig').connectToDB2Server)]",
+            "db2ServerName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2ServerName]",
+            "db2ServerPortNumber": "[steps('DB2ServerConnectionConfig').connectionInfo.db2ServerPortNumber]",
+            "db2DBName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBName]",
+            "db2DBUserName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBUserName]",
+            "db2DBUserPwd": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBUserPwd]"
         }
     }
 }

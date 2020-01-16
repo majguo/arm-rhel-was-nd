@@ -62,15 +62,25 @@
             "defaultValue": "false",
             "type": "string"
         },
-        "db2ConnConfig": {
-            "defaultValue": {
-                "serverName": "[parameters('guidValue')]",
-                "portNumber": "[parameters('guidValue')]",
-                "dBName": "[parameters('guidValue')]",
-                "dBUserName": "[parameters('guidValue')]",
-                "dBUserPwd": "[parameters('guidValue')]"
-            },
-            "type": "secureObject"
+        "db2ServerName": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "db2ServerPortNumber": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "db2DBName": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "db2DBUserName": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "db2DBUserPwd": {
+            "defaultValue": "",
+            "type": "securestring"
         },
         "guidValue": {
             "defaultValue": "[newGuid()]",
@@ -92,9 +102,8 @@
         "virtualNetworkRef": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "virtualMachineRef": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]",
         "scriptLocation": "[uri(parameters('_artifactsLocation'), 'scripts/')]",
-        "scriptName": "install.sh",
-        "commandToExecute1": "[concat('sh ',variables('scriptName'),' -l \"',parameters('installKitUri'),'\" -u ',parameters('ibmUserId'),' -p ',parameters('ibmUserPwd'),' -m ',parameters('adminUser'),' -c ',parameters('adminPwd'),' -a \"',variables('scriptLocation'),'\"')]",
-        "commandToExecute2": "[if(bool(parameters('connectToDB2Server')),concat(' -n \"',parameters('db2ConnConfig').serverName,'\" -t ',parameters('db2ConnConfig').portNumber,' -d ',parameters('db2ConnConfig').dBName,' -i ',parameters('db2ConnConfig').dBUserName,' -s ',parameters('db2ConnConfig').dBUserPwd),' -n  -t  -d  -i  -s ')]"
+        "arguments1": "[concat(' -l \"',parameters('installKitUri'),'\" -u ',parameters('ibmUserId'),' -p ',parameters('ibmUserPwd'),' -m ',parameters('adminUser'),' -c ',parameters('adminPwd'))]",
+        "arguments2": "[if(parameters('connectToDB2Server'),concat(' -n \"',parameters('db2ServerName'),'\" -t ',parameters('db2ServerPortNumber'),' -d ',parameters('db2DBName'),' -i ',parameters('db2DBUserName'),' -s ',parameters('db2DBUserPwd')),' -n  -t  -d  -i  -s ')]"
     },
     "resources": [
         {
@@ -270,9 +279,11 @@
                 "typeHandlerVersion": "2.0",
                 "settings": {
                     "fileUris": [
-                        "[uri(variables('scriptLocation'), concat(variables('scriptName'), parameters('_artifactsLocationSasToken')))]"
+                        "[uri(variables('scriptLocation'), concat('install.sh', parameters('_artifactsLocationSasToken')))]",
+                        "[uri(variables('scriptLocation'), concat('create-ds.sh', parameters('_artifactsLocationSasToken')))]",
+                        "[uri(variables('scriptLocation'), concat('create-ds.py', parameters('_artifactsLocationSasToken')))]"
                     ],
-                    "commandToExecute": "[concat(variables('commandToExecute1'), variables('commandToExecute2'))]"
+                    "commandToExecute": "[concat('sh install.sh', variables('arguments1'), variables('arguments2'))]"
                 }
             }
         }
