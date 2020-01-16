@@ -82,6 +82,10 @@
             "defaultValue": "",
             "type": "securestring"
         },
+        "db2DSJndiName": {
+            "defaultValue": "",
+            "type": "string"
+        },
         "guidValue": {
             "defaultValue": "[newGuid()]",
             "type": "string"
@@ -103,7 +107,7 @@
         "virtualMachineRef": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]",
         "scriptLocation": "[uri(parameters('_artifactsLocation'), 'scripts/')]",
         "arguments1": "[concat(' -l \"',parameters('installKitUri'),'\" -u ',parameters('ibmUserId'),' -p ',parameters('ibmUserPwd'),' -m ',parameters('adminUser'),' -c ',parameters('adminPwd'))]",
-        "arguments2": "[if(parameters('connectToDB2Server'),concat(' -n \"',parameters('db2ServerName'),'\" -t ',parameters('db2ServerPortNumber'),' -d ',parameters('db2DBName'),' -i ',parameters('db2DBUserName'),' -s ',parameters('db2DBUserPwd')),' -n  -t  -d  -i  -s ')]"
+        "arguments2": "[if(parameters('connectToDB2Server'),concat(' -n \"',parameters('db2ServerName'),'\" -t ',parameters('db2ServerPortNumber'),' -d ',parameters('db2DBName'),' -i ',parameters('db2DBUserName'),' -s ',parameters('db2DBUserPwd'),' -j ',parameters('db2DSJndiName')),' -n  -t  -d  -i  -s  -j ')]"
     },
     "resources": [
         {

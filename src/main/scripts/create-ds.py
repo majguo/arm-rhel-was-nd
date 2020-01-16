@@ -24,7 +24,7 @@ j2cUser = AdminConfig.create('JAASAuthData', security, jaasAttrs)
 # Data Source
 newjdbc = AdminConfig.getid('/JDBCProvider:DB2JDBCProvider/')
 name = ['name', 'DB2DataSource']
-jndi = ['jndiName', 'DB2DataSource']
+jndi = ['jndiName', '${DB2_DATASOURCE_JNDI_NAME}']
 auth = ['authDataAlias' , userAlias]
 authMechanism = ['authMechanismPreference' , 'BASIC_PASSWORD']
 helper = ['datasourceHelperClassname', 'com.ibm.websphere.rsadapter.DB2UniversalDataStoreHelper']
@@ -37,6 +37,15 @@ AdminConfig.create('J2EEResourceProperty', propSet, [["name", "driverType"], ["v
 AdminConfig.create('J2EEResourceProperty', propSet, [["name", "databaseName"], ["value", "${DB2_DATABASE_NAME}"]])
 AdminConfig.create('J2EEResourceProperty', propSet, [["name", "serverName"], ["value", "${DB2_SERVER_NAME}"]])
 AdminConfig.create('J2EEResourceProperty', propSet, [["name", "portNumber"], ["value", "${PORT_NUMBER}"]])
+
+# Create CMP Connection factory
+rra = AdminConfig.getid("/Server:${WAS_SERVER_NAME}/J2CResourceAdapter:WebSphere Relational Resource Adapter/")
+cmpAttrs = []
+cmpAttrs.append(["name", "DB2DataSource_CF"])
+cmpAttrs.append(["authMechanismPreference", "BASIC_PASSWORD"])
+cmpAttrs.append(["authDataAlias", userAlias])
+cmpAttrs.append(["cmpDatasource", newds])
+cf = AdminConfig.create("CMPConnectorFactory", rra, cmpAttrs)
 
 # Save configuratoin changes
 AdminConfig.save()

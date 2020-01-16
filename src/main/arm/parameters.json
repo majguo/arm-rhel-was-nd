@@ -43,6 +43,9 @@
         },
         "db2DBUserPwd": {
             "value": "${db2DBUserPwd}"
+        },
+        "db2DSJndiName": {
+            "value": "${db2DSJndiName}"
         }
     }
 }

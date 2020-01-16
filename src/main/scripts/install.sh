@@ -1,5 +1,5 @@
 #!/bin/sh
-while getopts "l:u:p:m:c:n:t:d:i:s:" opt; do
+while getopts "l:u:p:m:c:n:t:d:i:s:j:" opt; do
     case $opt in
         l)
             imKitLocation=$OPTARG #SAS URI of the IBM Installation Manager install kit in Azure Storage
@@ -30,6 +30,9 @@ while getopts "l:u:p:m:c:n:t:d:i:s:" opt; do
         ;;
         s)
             db2DBUserPwd=$OPTARG #Database user password of IBM DB2 Server
+        ;;
+        j)
+            db2DSJndiName=$OPTARG #Datasource JNDI name
         ;;
     esac
 done
@@ -73,7 +76,7 @@ sed -i "s/com.ibm.SOAP.loginPassword=/com.ibm.SOAP.loginPassword=${adminPassword
 
 # Configure JDBC provider and data soruce for IBM DB2 Server if required
 if [ ! -z "$db2ServerName" ] && [ ! -z "$db2ServerPortNumber" ] && [ ! -z "$db2DBName" ] && [ ! -z "$db2DBUserName" ] && [ ! -z "$db2DBUserPwd" ]; then
-    ./create-ds.sh /opt/IBM/WebSphere/ND/V9 AppSrv1 server1 "$db2ServerName" "$db2ServerPortNumber" "$db2DBName" "$db2DBUserName" "$db2DBUserPwd"
+    ./create-ds.sh /opt/IBM/WebSphere/ND/V9 AppSrv1 server1 "$db2ServerName" "$db2ServerPortNumber" "$db2DBName" "$db2DBUserName" "$db2DBUserPwd" "$db2DSJndiName"
 fi
 
 # Add systemd unit file for websphere.service
