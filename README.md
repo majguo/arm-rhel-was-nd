@@ -16,16 +16,16 @@
  4. Build the project by replacing all placeholder `${<place_holder>}` with valid values
     - if you want to connect DB2 Server to your WebSphere server, provide valid DNS name/IP address, port number, database name, user name & password of a running & accessible DB2 server for parameters `db2ServerName`, `db2ServerPortNumber`, `db2DBName`, `db2DBUserName` & `db2DBUserPwd`
       ```
-      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DibmUserId=<ibmUserId> -DibmUserPwd=<ibmUserPwd> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DvirtualMachineName=<virtualMachineName> -DvirtualNetworkName=<virtualNetworkName> -DaddressPrefix=<addressPrefix> -DsubnetName=<subnetName> -DsubnetAddressPrefix=<subnetAddressPrefix> -DconnectToDB2Server=true -Ddb2ServerName=<db2ServerName> -Ddb2ServerPortNumber=<db2ServerPortNumber> -Ddb2DBName=<db2DBName> -Ddb2DBUserName=<db2DBUserName> -Ddb2DBUserPwd=<db2DBUserPwd> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
+      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DibmUserId=<ibmUserId> -DibmUserPwd=<ibmUserPwd> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=true -Ddb2ServerName=<db2ServerName> -Ddb2ServerPortNumber=<db2ServerPortNumber> -Ddb2DBName=<db2DBName> -Ddb2DBUserName=<db2DBUserName> -Ddb2DBUserPwd=<db2DBUserPwd> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
       ```
     - otherwise, assign empty strings `""` to them
       ```
-      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DibmUserId=<ibmUserId> -DibmUserPwd=<ibmUserPwd> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DvirtualMachineName=<virtualMachineName> -DvirtualNetworkName=<virtualNetworkName> -DaddressPrefix=<addressPrefix> -DsubnetName=<subnetName> -DsubnetAddressPrefix=<subnetAddressPrefix> -DconnectToDB2Server=false -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
+      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DibmUserId=<ibmUserId> -DibmUserPwd=<ibmUserPwd> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=false -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
       ```
- 5. Change to `.\target\scripts` directory
+ 5. Change to `./target/arm` directory
  6. Using `deploy.azcli` to deploy
     ```
-    deploy.azcli -n <deploymentName> -f <installKitFile> -i <subscriptionId> -g <resourceGroupName> -l <resourceGroupLocation>
+    ./deploy.azcli -n <deploymentName> -f <installKitFile> -i <subscriptionId> -g <resourceGroupName> -l <resourceGroupLocation>
     ```
 
 ## After deployment
