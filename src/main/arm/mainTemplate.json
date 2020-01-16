@@ -59,8 +59,8 @@
             "type": "string"
         },
         "connectToDB2Server": {
-            "defaultValue": "false",
-            "type": "string"
+            "defaultValue": false,
+            "type": "bool"
         },
         "db2ServerName": {
             "defaultValue": "",
