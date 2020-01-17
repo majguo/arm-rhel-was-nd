@@ -9,7 +9,7 @@
 - Offer ID
   - 20200117-arm-rhel-was-nd
 - Offer alias
-  - IBM WebSphere Server ND Traditional V9.0.5
+  - IBM WebSphere Server ND Traditional V9.0.5 Single
 
 ## Offer setup
 
