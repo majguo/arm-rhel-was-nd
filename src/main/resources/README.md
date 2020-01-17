@@ -7,7 +7,7 @@
 ## New offer
 
 - Offer ID
-  - 20191106-arm-rhel-was-nd
+  - 20200117-arm-rhel-was-nd
 - Offer alias
   - IBM WebSphere Server ND Traditional V9.0.5
 
