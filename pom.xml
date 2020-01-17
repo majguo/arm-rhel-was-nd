@@ -18,7 +18,7 @@
     <name>${project.artifactId}</name>
 
     <properties>
-        <tracking.pid>pid-0b7d1985-fcd7-5a7e-981b-b44f5ebae75e</tracking.pid>
+        <tracking.pid>pid-c4a3e490-f7bc-5ed1-a0ba-0e4ed4fe024f</tracking.pid>
         <template.validation.tests.directory>${basedir}/../azure-quickstart-templates/test/arm-ttk</template.validation.tests.directory>
     </properties>
 </project>
