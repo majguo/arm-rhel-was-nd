@@ -46,6 +46,15 @@
         },
         "db2DSJndiName": {
             "value": "${db2DSJndiName}"
+        },
+        "connectToELK": {
+            "value": "${connectToELK}"
+        },
+        "logStashServerName": {
+            "value": "${logStashServerName}"
+        },
+        "logStashServerPortNumber": {
+            "value": "${logStashServerPortNumber}"
         }
     }
 }

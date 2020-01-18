@@ -86,6 +86,18 @@
             "defaultValue": "",
             "type": "string"
         },
+        "connectToELK": {
+            "defaultValue": false,
+            "type": "bool"
+        },
+        "logStashServerName": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "logStashServerPortNumber": {
+            "defaultValue": "",
+            "type": "string"
+        },
         "guidValue": {
             "defaultValue": "[newGuid()]",
             "type": "string"
@@ -107,7 +119,8 @@
         "virtualMachineRef": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]",
         "scriptLocation": "[uri(parameters('_artifactsLocation'), 'scripts/')]",
         "arguments1": "[concat(' -l \"',parameters('installKitUri'),'\" -u ',parameters('ibmUserId'),' -p ',parameters('ibmUserPwd'),' -m ',parameters('adminUser'),' -c ',parameters('adminPwd'))]",
-        "arguments2": "[if(parameters('connectToDB2Server'),concat(' -n \"',parameters('db2ServerName'),'\" -t ',parameters('db2ServerPortNumber'),' -d ',parameters('db2DBName'),' -i ',parameters('db2DBUserName'),' -s ',parameters('db2DBUserPwd'),' -j ',parameters('db2DSJndiName')),' -n  -t  -d  -i  -s  -j ')]"
+        "arguments2": "[if(parameters('connectToDB2Server'),concat(' -n \"',parameters('db2ServerName'),'\" -t ',parameters('db2ServerPortNumber'),' -d ',parameters('db2DBName'),' -i ',parameters('db2DBUserName'),' -s ',parameters('db2DBUserPwd'),' -j ',parameters('db2DSJndiName')),' -n  -t  -d  -i  -s  -j ')]",
+        "arguments3": "[if(parameters('connectToELK'),concat(' -g \"',parameters('logStashServerName'),'\" -o ',parameters('logStashServerPortNumber')),' -g  -o ')]"
     },
     "resources": [
         {
@@ -287,7 +300,7 @@
                         "[uri(variables('scriptLocation'), concat('create-ds.sh', parameters('_artifactsLocationSasToken')))]",
                         "[uri(variables('scriptLocation'), concat('create-ds.py', parameters('_artifactsLocationSasToken')))]"
                     ],
-                    "commandToExecute": "[concat('sh install.sh', variables('arguments1'), variables('arguments2'))]"
+                    "commandToExecute": "[concat('sh install.sh', variables('arguments1'), variables('arguments2'), variables('arguments3'))]"
                 }
             }
         }

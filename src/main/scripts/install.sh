@@ -1,5 +1,5 @@
 #!/bin/sh
-while getopts "l:u:p:m:c:n:t:d:i:s:j:" opt; do
+while getopts "l:u:p:m:c:n:t:d:i:s:j:g:o:" opt; do
     case $opt in
         l)
             imKitLocation=$OPTARG #SAS URI of the IBM Installation Manager install kit in Azure Storage
@@ -33,6 +33,12 @@ while getopts "l:u:p:m:c:n:t:d:i:s:j:" opt; do
         ;;
         j)
             db2DSJndiName=$OPTARG #Datasource JNDI name
+        ;;
+        g)
+            logStashServerName=$OPTARG #Host name/IP address of LogStash Server
+        ;;
+        o)
+            logStashServerPortNumber=$OPTARG #Port number of LogStash Server
         ;;
     esac
 done
@@ -82,17 +88,22 @@ fi
 # Add systemd unit file for websphere.service
 srvName=websphere
 websphereSrv=/etc/systemd/system/${srvName}.service
-echo "[Unit]" > "$websphereSrv"
-echo "Description=IBM WebSphere Application Server" >> "$websphereSrv"
-echo "[Service]" >> "$websphereSrv"
-echo "Type=forking" >> "$websphereSrv"
-echo "ExecStart=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/startServer.sh server1" >> "$websphereSrv"
-echo "ExecStop=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/stopServer.sh server1" >> "$websphereSrv"
-echo "PIDFile=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/server1.pid" >> "$websphereSrv"
-echo "SuccessExitStatus=143 0" >> "$websphereSrv"
-echo "[Install]" >> "$websphereSrv"
-echo "WantedBy=default.target" >> "$websphereSrv"
+cat <<EOF > "$websphereSrv"
+[Unit]
+Description=IBM WebSphere Application Server
+[Service]
+Type=forking
+ExecStart=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/startServer.sh server1
+ExecStop=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/stopServer.sh server1
+PIDFile=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/server1.pid
+SuccessExitStatus=143 0
+[Install]
+WantedBy=default.target
+EOF
 chmod a+x "$websphereSrv"
+
+echo "Host name/IP address of LogStash Server is ${logStashServerName}"
+echo "Port number of LogStash Server is ${logStashServerPortNumber}"
 
 # Enable and start websphere service
 /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/stopServer.sh server1
