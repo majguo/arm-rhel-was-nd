@@ -85,9 +85,9 @@ if [ ! -z "$db2ServerName" ] && [ ! -z "$db2ServerPortNumber" ] && [ ! -z "$db2D
     ./create-ds.sh /opt/IBM/WebSphere/ND/V9 AppSrv1 server1 "$db2ServerName" "$db2ServerPortNumber" "$db2DBName" "$db2DBUserName" "$db2DBUserPwd" "$db2DSJndiName"
 fi
 
-# Enable HPEL and distribute log to ELK Stack if required
+# Enable HPEL service if required
 if [ ! -z "$logStashServerName" ] && [ ! -z "$logStashServerPortNumber" ]; then
-    ./enable-hpel.sh /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1 server1 "$logStashServerName" "$logStashServerPortNumber"
+    ./enable-hpel.sh /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1 server1 /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/hpelOutput.log was_logviewer
 fi
 
 # Add systemd unit file for websphere.service
@@ -111,6 +111,12 @@ EOF
 systemctl daemon-reload
 systemctl enable "$srvName"
 systemctl start "$srvName"
+
+# Start HPEL service and distribute log to ELK Stack if required
+if [ ! -z "$logStashServerName" ] && [ ! -z "$logStashServerPortNumber" ]; then
+    systemctl start was_logviewer
+    ./setup-filebeat.sh /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/hpelOutput*.log "$logStashServerName" "$logStashServerPortNumber"
+fi
 
 # Open ports by adding iptables rules
 firewall-cmd --zone=public --add-port=9060/tcp --permanent
