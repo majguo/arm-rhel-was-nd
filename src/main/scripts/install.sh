@@ -53,9 +53,9 @@ ibmJavaSDK=com.ibm.java.jdk.v8_8.0.5040.20190808_0919
 mkdir -p /opt/IBM/InstallationManager/V1.9 && mkdir -p /opt/IBM/WebSphere/ND/V9 && mkdir -p /opt/IBM/IMShared
 
 # Install IBM Installation Manager
-wget -O "$imKitName" "$imKitLocation"
+wget -O "$imKitName" "$imKitLocation" -q
 mkdir im_installer
-unzip "$imKitName" -d im_installer
+unzip -q "$imKitName" -d im_installer
 ./im_installer/userinstc -log log_file -acceptLicense -installationDirectory /opt/IBM/InstallationManager/V1.9
 
 # Install IBM WebSphere Application Server Network Deployment V9 using IBM Instalation Manager
@@ -85,6 +85,11 @@ if [ ! -z "$db2ServerName" ] && [ ! -z "$db2ServerPortNumber" ] && [ ! -z "$db2D
     ./create-ds.sh /opt/IBM/WebSphere/ND/V9 AppSrv1 server1 "$db2ServerName" "$db2ServerPortNumber" "$db2DBName" "$db2DBUserName" "$db2DBUserPwd" "$db2DSJndiName"
 fi
 
+# Enable HPEL and distribute log to ELK Stack if required
+if [ ! -z "$logStashServerName" ] && [ ! -z "$logStashServerPortNumber" ]; then
+    ./enable-hpel.sh /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1 server1 "$logStashServerName" "$logStashServerPortNumber"
+fi
+
 # Add systemd unit file for websphere.service
 srvName=websphere
 websphereSrv=/etc/systemd/system/${srvName}.service
@@ -100,10 +105,6 @@ SuccessExitStatus=143 0
 [Install]
 WantedBy=default.target
 EOF
-chmod a+x "$websphereSrv"
-
-echo "Host name/IP address of LogStash Server is ${logStashServerName}"
-echo "Port number of LogStash Server is ${logStashServerPortNumber}"
 
 # Enable and start websphere service
 /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/stopServer.sh server1
