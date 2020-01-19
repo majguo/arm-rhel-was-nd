@@ -9,7 +9,7 @@ logStashServerPortNumber=$4 #Port number of LogStash Server
 cp enable-hpel.py enable-hpel.py.bak
 sed -i "s/\${WAS_SERVER_NAME}/${wasServerName}/g" enable-hpel.py
 "$wasProfilePath"/bin/wsadmin.sh -lang jython -f enable-hpel.py
-${wasProfilePath}/bin/logViewer.sh -outLog ${wasProfilePath}/logs/${wasServerName}/hpelOutput.log -resumable -resume -format json -monitor &
+nohup ${wasProfilePath}/bin/logViewer.sh -outLog ${wasProfilePath}/logs/${wasServerName}/hpelOutput.log -resumable -resume -format json -monitor &
 
 # Add systemd unit file for was_logviewer.service
 cat <<EOF > /etc/systemd/system/was_logviewer.service
