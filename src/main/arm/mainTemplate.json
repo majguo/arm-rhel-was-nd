@@ -300,7 +300,8 @@
                         "[uri(variables('scriptLocation'), concat('create-ds.sh', parameters('_artifactsLocationSasToken')))]",
                         "[uri(variables('scriptLocation'), concat('create-ds.py', parameters('_artifactsLocationSasToken')))]",
                         "[uri(variables('scriptLocation'), concat('enable-hpel.sh', parameters('_artifactsLocationSasToken')))]",
-                        "[uri(variables('scriptLocation'), concat('enable-hpel.py', parameters('_artifactsLocationSasToken')))]"
+                        "[uri(variables('scriptLocation'), concat('enable-hpel.py', parameters('_artifactsLocationSasToken')))]",
+                        "[uri(variables('scriptLocation'), concat('setup-filebeat.sh', parameters('_artifactsLocationSasToken')))]"
                     ],
                     "commandToExecute": "[concat('sh install.sh', variables('arguments1'), variables('arguments2'), variables('arguments3'))]"
                 }

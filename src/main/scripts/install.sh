@@ -115,7 +115,7 @@ systemctl start "$srvName"
 # Start HPEL service and distribute log to ELK Stack if required
 if [ ! -z "$logStashServerName" ] && [ ! -z "$logStashServerPortNumber" ]; then
     systemctl start was_logviewer
-    ./setup-filebeat.sh /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/hpelOutput*.log "$logStashServerName" "$logStashServerPortNumber"
+    ./setup-filebeat.sh "/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/hpelOutput*.log" "$logStashServerName" "$logStashServerPortNumber"
 fi
 
 # Open ports by adding iptables rules
