@@ -260,6 +260,67 @@
                         "visible": "[bool(steps('DB2ServerConnectionConfig').connectToDB2Server)]"
                     }
                 ]
+            },
+            {
+                "name": "ELKConnectionConfig",
+                "label": "Elastic Stack Connection Settings",
+                "subLabel": {
+                    "preValidation": "Configure the connection to Elastic Stack.",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Elastic Stack Connection Settings",
+                "elements": [
+                    {
+                        "name": "connectToELK",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Connect to Elastic Stack?",
+                        "defaultValue": "Yes",
+                        "toolTip": "Select 'Yes' and provide required info to configure the connection to Elastic Stack.",
+                        "constraints": {
+                        "allowedValues": [
+                            {
+                                "label": "Yes",
+                                "value": "true"
+                            },
+                            {
+                                "label": "No",
+                                "value": "false"
+                            }
+                        ],
+                        "required": true
+                        }
+                    },
+                    {
+                        "name": "connectionInfo",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Connection Settings",
+                        "elements": [
+                            {
+                                "name": "logStashServerName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "DNS name or IP address",
+                                "toolTip": "The DNS name/IP address of a pre-existing Logstash Server.",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^((\\*)|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((\\*\\.)?([a-zA-Z0-9-]+\\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\\.[a-zA-Z]{2,63}?))$",
+                                    "validationMessage": "The value must be a valid DNS name or IP address."
+                                }
+                            },
+                            {
+                                "name": "logStashServerPortNumber",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Port number",
+                                "toolTip": "The port number of a pre-existing Logstash Server.",
+                                "constraints": {
+                                    "required": true,
+                                    "regex": "^[0-9]+$",
+                                    "validationMessage": "The value must be numbers."
+                                }
+                            }
+                        ],
+                        "visible": "[bool(steps('ELKConnectionConfig').connectToELK)]"
+                    }
+                ]
             }
         ],
         "outputs": {
@@ -279,7 +340,10 @@
             "db2DBName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBName]",
             "db2DBUserName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBUserName]",
             "db2DBUserPwd": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBUserPwd]",
-            "db2DSJndiName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DSJndiName]"
+            "db2DSJndiName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DSJndiName]",
+            "connectToELK": "[bool(steps('ELKConnectionConfig').connectToELK)]",
+            "logStashServerName": "[steps('ELKConnectionConfig').connectionInfo.logStashServerName]",
+            "logStashServerPortNumber": "[steps('ELKConnectionConfig').connectionInfo.logStashServerPortNumber]"
         }
     }
 }
