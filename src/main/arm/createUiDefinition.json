@@ -293,7 +293,7 @@
                     {
                         "name": "connectionInfo",
                         "type": "Microsoft.Common.Section",
-                        "label": "Connection Settings",
+                        "label": "Logstash Connection Settings",
                         "elements": [
                             {
                                 "name": "logStashServerName",
