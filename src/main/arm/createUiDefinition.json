@@ -59,29 +59,6 @@
                         "label": "Credentials for WebSphere Creation",
                         "elements": [
                             {
-                                "name": "IBMidUsername",
-                                "type": "Microsoft.Common.TextBox",
-                                "label": "IBMid Username",
-                                "toolTip": "The username of a pre-existing IBMid.",
-                                "constraints": {
-                                    "required": true,
-                                    "regex": "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
-                                    "validationMessage": "The value must be a valid email address."
-                                }
-                            },
-                            {
-                                "name": "IBMidPassword",
-                                "type": "Microsoft.Common.PasswordBox",
-                                "label": {
-                                    "password": "Password for IBMid",
-                                    "confirmPassword": "Confirm password"
-                                },
-                                "toolTip": "Password for IBMid",
-                                "constraints": {
-                                  "required": true
-                                }
-                            },
-                            {
                                 "name": "acceptIBMLicenseAgreement",
                                 "label": "Accept IBM License Agreement",
                                 "type": "Microsoft.Common.TextBox",
@@ -139,24 +116,6 @@
                                 "toolTip": "Password for admin account of WebSphere",
                                 "constraints": {
                                     "required": true
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "name": "IBMInstallKit",
-                        "type": "Microsoft.Common.Section",
-                        "label": "IBM Installation Manager Installation Kit V1.9",
-                        "elements": [
-                            {
-                                "name": "uri",
-                                "type": "Microsoft.Common.TextBox",
-                                "toolTip": "You can download it from IBM web site with your IBMid account, upload to Azure Storage and make it available by generating SAS.",
-                                "label": "The Uri to the accessible IBM Installation Manager Installation Kit V1.9",
-                                "constraints": {
-                                    "required": true,
-                                    "regex": "^(https?:\/\/)?([\\w-])+\\.([a-zA-Z]{2,63})([\/\\w-]*)*\/?\\??([^#\n\r]*)?#?([^\n\r]*)?$",
-                                    "validationMessage": "The value must be a valid URI."
                                 }
                             }
                         ]
@@ -327,13 +286,10 @@
             "location": "[location()]",
             "dnsLabelPrefix": "[basics('dnsLabelPrefix')]",
             "vmSize": "[steps('VirtualMachineConfig').vmSizeSelect]",
-            "ibmUserId": "[steps('Prerequisites').Credentials.IBMidUsername]",
-            "ibmUserPwd": "[steps('Prerequisites').Credentials.IBMidPassword]",
             "vmAdminId": "[steps('Prerequisites').Credentials.adminUsername]",
             "vmAdminPwd": "[steps('Prerequisites').Credentials.adminPassword]",
             "adminUser": "[steps('Prerequisites').Credentials.wasAdminUsername]",
             "adminPwd": "[steps('Prerequisites').Credentials.wasAdminPassword]",
-            "installKitUri": "[steps('Prerequisites').IBMInstallKit.uri]",
             "connectToDB2Server": "[bool(steps('DB2ServerConnectionConfig').connectToDB2Server)]",
             "db2ServerName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2ServerName]",
             "db2ServerPortNumber": "[steps('DB2ServerConnectionConfig').connectionInfo.db2ServerPortNumber]",
