@@ -17,10 +17,6 @@
         "dnsLabelPrefix": {
             "type": "string"
         },
-        "vmImageId": {
-            "type": "string",
-            "defaultValue": "myImageId"
-        },
         "vmSize": {
             "defaultValue": "Standard_D2_v3",
             "type": "string"
@@ -249,7 +245,10 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "id": "[parameters('vmImageId')]"
+                        "publisher": "microsoft_javaeeonazure_test",
+                        "offer": "rhel74-was-jdk-preview",
+                        "sku": "905",
+                        "version": "9.0.5"
                     },
                     "osDisk": {
                         "name": "[variables('diskName')]",

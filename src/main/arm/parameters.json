@@ -8,9 +8,6 @@
         "dnsLabelPrefix":{
             "value": "${dnsLabelPrefix}"
         },
-        "vmImageId": {
-            "value": "${vmImageId}"
-        },
         "vmAdminId": {
             "value": "${vmAdminId}"
         },
