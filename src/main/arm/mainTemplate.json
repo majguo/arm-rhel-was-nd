@@ -269,12 +269,12 @@
                             "id": "[variables('networkInterfaceRef')]"
                         }
                     ]
-                },
-                "plan": {
-                    "name": "905",
-                    "publisher": "microsoft_javaeeonazure_test",
-                    "product": "rhel74-was-jdk-preview"
                 }
+            },
+            "plan": {
+                "name": "905",
+                "publisher": "microsoft_javaeeonazure_test",
+                "product": "rhel74-was-jdk-preview"
             }
         },
         {
