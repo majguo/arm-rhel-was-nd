@@ -2,7 +2,7 @@
 
 ## Prerequisites
  - Register an [Azure subscription](https://azure.microsoft.com/en-us/)
- - Prepare a VM image which consists of RHEL 7.4, IBM WebSphere Application Server ND Traditional V9.0.5 and IBM JDK V8.0 pre-installed
+ - The virtual machine offer which includes the image of RHEL7.4, IBM WebSphere & JDK is used as image reference to deploy virtual machine on Azure. Before the offer goes live in Azure Marketplace, your Azure subscription needs to be added into white list to successfully deploy VM using ARM template of this repo.
  - Install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
  - Install [PowerShell Core](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6)
  - Install Maven
@@ -15,19 +15,19 @@
  4. Build the project by replacing all placeholder `${<place_holder>}` with valid values
     - connect to DB2 Server & Elastic Stack
       ```
-      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DvmImageId=<vmImageId> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=true -Ddb2ServerName=<db2ServerName> -Ddb2ServerPortNumber=<db2ServerPortNumber> -Ddb2DBName=<db2DBName> -Ddb2DBUserName=<db2DBUserName> -Ddb2DBUserPwd=<db2DBUserPwd> -Ddb2DSJndiName=<db2DSJndiName> -DconnectToELK=true -DlogStashServerName=<logStashServerName> -DlogStashServerPortNumber=<logStashServerPortNumber> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
+      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=true -Ddb2ServerName=<db2ServerName> -Ddb2ServerPortNumber=<db2ServerPortNumber> -Ddb2DBName=<db2DBName> -Ddb2DBUserName=<db2DBUserName> -Ddb2DBUserPwd=<db2DBUserPwd> -Ddb2DSJndiName=<db2DSJndiName> -DconnectToELK=true -DlogStashServerName=<logStashServerName> -DlogStashServerPortNumber=<logStashServerPortNumber> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
       ```
     - connect to DB2 Server only
       ```
-      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DvmImageId=<vmImageId> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=true -Ddb2ServerName=<db2ServerName> -Ddb2ServerPortNumber=<db2ServerPortNumber> -Ddb2DBName=<db2DBName> -Ddb2DBUserName=<db2DBUserName> -Ddb2DBUserPwd=<db2DBUserPwd> -Ddb2DSJndiName=<db2DSJndiName> -DconnectToELK=false -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
+      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=true -Ddb2ServerName=<db2ServerName> -Ddb2ServerPortNumber=<db2ServerPortNumber> -Ddb2DBName=<db2DBName> -Ddb2DBUserName=<db2DBUserName> -Ddb2DBUserPwd=<db2DBUserPwd> -Ddb2DSJndiName=<db2DSJndiName> -DconnectToELK=false -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
       ```
     - connect to Elastic Stack only
       ```
-      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DvmImageId=<vmImageId> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=false -DconnectToELK=true -DlogStashServerName=<logStashServerName> -DlogStashServerPortNumber=<logStashServerPortNumber> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
+      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=false -DconnectToELK=true -DlogStashServerName=<logStashServerName> -DlogStashServerPortNumber=<logStashServerPortNumber> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
       ```
     - connect to neither DB2 Server nor Elastic Stack
       ```
-      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DvmImageId=<vmImageId> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=false -DconnectToELK=false -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
+      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=false -DconnectToELK=false -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
       ```
  5. Change to `./target/arm` directory
  6. Using `deploy.azcli` to deploy
