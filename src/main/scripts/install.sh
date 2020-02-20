@@ -36,7 +36,7 @@ done
 
 # Create standalone application profile
 /opt/IBM/WebSphere/ND/V9/bin/manageprofiles.sh -create -profileName AppSrv1 -templatePath /opt/IBM/WebSphere/ND/V9/profileTemplates/default \
-    -enableAdminSecurity true -adminUserName "$adminUserName" -adminPassword "$adminPassword"
+    -hostName $(hostname) -nodeName $(hostname)Node01 -enableAdminSecurity true -adminUserName "$adminUserName" -adminPassword "$adminPassword"
 
 # Add credentials to "soap.client.props" so they can be read by relative commands if required
 soapClientProps=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/properties/soap.client.props
