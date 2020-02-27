@@ -30,4 +30,4 @@ sed -i "s/\${DB2_SERVER_NAME}/${db2ServerName}/g" create-ds.py
 sed -i "s/\${PORT_NUMBER}/${db2ServerPortNumber}/g" create-ds.py
 
 # Create JDBC provider and data source using jython file
-"$wasRootPath"/bin/wsadmin.sh -lang jython -f create-ds.py
+"$wasRootPath"/profiles/${wasProfileName}/bin/wsadmin.sh -lang jython -f create-ds.py
