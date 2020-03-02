@@ -81,13 +81,17 @@
             "defaultValue": false,
             "type": "bool"
         },
-        "logStashServerName": {
+        "cloudId": {
             "defaultValue": "",
             "type": "string"
         },
-        "logStashServerPortNumber": {
+        "cloudAuthUser": {
             "defaultValue": "",
             "type": "string"
+        },
+        "cloudAuthPwd": {
+            "defaultValue": "",
+            "type": "securestring"
         },
         "guidValue": {
             "defaultValue": "[newGuid()]",
@@ -111,7 +115,7 @@
         "scriptLocation": "[uri(parameters('_artifactsLocation'), 'scripts/')]",
         "arguments1": "[concat(' -m ',parameters('adminUser'),' -c ',parameters('adminPwd'))]",
         "arguments2": "[if(parameters('connectToDB2Server'),concat(' -n \"',parameters('db2ServerName'),'\" -t ',parameters('db2ServerPortNumber'),' -d ',parameters('db2DBName'),' -i ',parameters('db2DBUserName'),' -s ',parameters('db2DBUserPwd'),' -j ',parameters('db2DSJndiName')),' -n  -t  -d  -i  -s  -j ')]",
-        "arguments3": "[if(parameters('connectToELK'),concat(' -g \"',parameters('logStashServerName'),'\" -o ',parameters('logStashServerPortNumber')),' -g  -o ')]"
+        "arguments3": "[if(parameters('connectToELK'),concat(' -g ',parameters('cloudId'),' -o ',parameters('cloudAuthUser'),' -k ',parameters('cloudAuthPwd')),' -g  -o  -k ')]"
     },
     "resources": [
         {

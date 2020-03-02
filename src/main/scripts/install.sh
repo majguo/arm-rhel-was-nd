@@ -1,5 +1,5 @@
 #!/bin/sh
-while getopts "m:c:n:t:d:i:s:j:g:o:" opt; do
+while getopts "m:c:n:t:d:i:s:j:g:o:k:" opt; do
     case $opt in
         m)
             adminUserName=$OPTARG #User id for admimistrating WebSphere Admin Console
@@ -26,10 +26,13 @@ while getopts "m:c:n:t:d:i:s:j:g:o:" opt; do
             db2DSJndiName=$OPTARG #Datasource JNDI name
         ;;
         g)
-            logStashServerName=$OPTARG #Host name/IP address of LogStash Server
+            cloudId=$OPTARG #Cloud ID of Elasticsearch Service on Elastic Cloud
         ;;
         o)
-            logStashServerPortNumber=$OPTARG #Port number of LogStash Server
+            cloudAuthUser=$OPTARG #User name of Elasticsearch Service on Elastic Cloud
+        ;;
+        k)
+            cloudAuthPwd=$OPTARG #Password of Elasticsearch Service on Elastic Cloud
         ;;
     esac
 done
@@ -55,7 +58,7 @@ if [ ! -z "$db2ServerName" ] && [ ! -z "$db2ServerPortNumber" ] && [ ! -z "$db2D
 fi
 
 # Enable HPEL service if required
-if [ ! -z "$logStashServerName" ] && [ ! -z "$logStashServerPortNumber" ]; then
+if [ ! -z "$cloudId" ] && [ ! -z "$cloudAuthUser" ] && [ ! -z "$cloudAuthPwd" ]; then
     ./enable-hpel.sh /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1 server1 /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/hpelOutput.log was_logviewer
 fi
 
@@ -82,9 +85,9 @@ systemctl enable "$srvName"
 systemctl start "$srvName"
 
 # Start HPEL service and distribute log to ELK Stack if required
-if [ ! -z "$logStashServerName" ] && [ ! -z "$logStashServerPortNumber" ]; then
+if [ ! -z "$cloudId" ] && [ ! -z "$cloudAuthUser" ] && [ ! -z "$cloudAuthPwd" ]; then
     systemctl start was_logviewer
-    ./setup-filebeat.sh "/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/hpelOutput*.log" "$logStashServerName" "$logStashServerPortNumber"
+    ./setup-filebeat.sh "/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/hpelOutput*.log" "$cloudId" "$cloudAuthUser" "$cloudAuthPwd"
 fi
 
 # Open ports by adding iptables rules

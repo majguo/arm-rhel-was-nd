@@ -15,7 +15,7 @@
  4. Build the project by replacing all placeholder `${<place_holder>}` with valid values
     - connect to DB2 Server & Elastic Stack
       ```
-      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=true -Ddb2ServerName=<db2ServerName> -Ddb2ServerPortNumber=<db2ServerPortNumber> -Ddb2DBName=<db2DBName> -Ddb2DBUserName=<db2DBUserName> -Ddb2DBUserPwd=<db2DBUserPwd> -Ddb2DSJndiName=<db2DSJndiName> -DconnectToELK=true -DlogStashServerName=<logStashServerName> -DlogStashServerPortNumber=<logStashServerPortNumber> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
+      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=true -Ddb2ServerName=<db2ServerName> -Ddb2ServerPortNumber=<db2ServerPortNumber> -Ddb2DBName=<db2DBName> -Ddb2DBUserName=<db2DBUserName> -Ddb2DBUserPwd=<db2DBUserPwd> -Ddb2DSJndiName=<db2DSJndiName> -DconnectToELK=true -DcloudId=<cloudId> -DcloudAuthUser=<cloudAuthUser> -DcloudAuthPwd=<cloudAuthPwd> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
       ```
     - connect to DB2 Server only
       ```
@@ -23,7 +23,7 @@
       ```
     - connect to Elastic Stack only
       ```
-      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=false -DconnectToELK=true -DlogStashServerName=<logStashServerName> -DlogStashServerPortNumber=<logStashServerPortNumber> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
+      mvn -Dgit.repo=<repo_user> -Dgit.tag=<repo_tag> -DadminUser=<adminUser> -DadminPwd=<adminPwd> -DvmAdminId=<vmAdminId> -DvmAdminPwd=<vmAdminPwd> -DdnsLabelPrefix=<dnsLabelPrefix> -DconnectToDB2Server=false -DconnectToELK=true -DcloudId=<cloudId> -DcloudAuthUser=<cloudAuthUser> -DcloudAuthPwd=<cloudAuthPwd> -Dtest.args="-Test All" -Ptemplate-validation-tests clean install
       ```
     - connect to neither DB2 Server nor Elastic Stack
       ```

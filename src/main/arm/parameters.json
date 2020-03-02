@@ -44,11 +44,14 @@
         "connectToELK": {
             "value": "${connectToELK}"
         },
-        "logStashServerName": {
-            "value": "${logStashServerName}"
+        "cloudId": {
+            "value": "${cloudId}"
         },
-        "logStashServerPortNumber": {
-            "value": "${logStashServerPortNumber}"
+        "cloudAuthUser": {
+            "value": "${cloudAuthUser}"
+        },
+        "cloudAuthPwd": {
+            "value": "${cloudAuthPwd}"
         }
     }
 }

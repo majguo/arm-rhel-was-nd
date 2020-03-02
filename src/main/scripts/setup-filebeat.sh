@@ -1,8 +1,9 @@
 #!/bin/sh
 # Parameters
 outLogPath=$1 #Log output path
-logStashServerName=$2 #Host name/IP address of LogStash Server
-logStashServerPortNumber=$3 #Port number of LogStash Server
+cloudId=$2 #Cloud ID of Elasticsearch Service on Elastic Cloud
+cloudAuthUser=$3 #User name of Elasticsearch Service on Elastic Cloud
+cloudAuthPwd=$4 #Password of Elasticsearch Service on Elastic Cloud
 
 # Install Filebeat
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
@@ -25,12 +26,15 @@ filebeat.inputs:
 - type: log
   paths:
     - ${outLogPath}
+  json.message_key: ibm_datetime
+  json.keys_under_root: true
+  json.add_error_key: true
 
 processors:
-- add_cloud_metadata:
+- add_cloud_metadata: ~
 
-output.logstash:
-  hosts: ["${logStashServerName}:${logStashServerPortNumber}"]
+cloud.id: ${cloudId}
+cloud.auth: ${cloudAuthUser}:${cloudAuthPwd}
 EOF
 
 # Enable & start filebeat

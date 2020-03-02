@@ -232,9 +232,9 @@
                     {
                         "name": "connectToELK",
                         "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Connect to Elastic Stack?",
+                        "label": "Connect to Elasticsearch Service on Elastic Cloud?",
                         "defaultValue": "Yes",
-                        "toolTip": "Select 'Yes' and provide required info to configure the connection to Elastic Stack.",
+                        "toolTip": "Select 'Yes' and provide required info to configure the connection to Elasticsearch Service on Elastic Cloud.",
                         "constraints": {
                         "allowedValues": [
                             {
@@ -252,28 +252,36 @@
                     {
                         "name": "connectionInfo",
                         "type": "Microsoft.Common.Section",
-                        "label": "Logstash Connection Settings",
+                        "label": "Connection Settings",
                         "elements": [
                             {
-                                "name": "logStashServerName",
+                                "name": "cloudId",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "DNS name or IP address",
-                                "toolTip": "The DNS name/IP address of a pre-existing Logstash Server.",
+                                "label": "Cloud ID of Elasticsearch Service",
+                                "toolTip": "The Cloud ID of Elasticsearch Service on Elastic Cloud.",
                                 "constraints": {
-                                    "required": true,
-                                    "regex": "^((\\*)|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((\\*\\.)?([a-zA-Z0-9-]+\\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\\.[a-zA-Z]{2,63}?))$",
-                                    "validationMessage": "The value must be a valid DNS name or IP address."
+                                    "required": true
                                 }
                             },
                             {
-                                "name": "logStashServerPortNumber",
+                                "name": "cloudAuthUser",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "Port number",
-                                "toolTip": "The port number of a pre-existing Logstash Server.",
+                                "label": "Username of Elasticsearch Service",
+                                "toolTip": "The user name of Elasticsearch Service on Elastic Cloud.",
                                 "constraints": {
-                                    "required": true,
-                                    "regex": "^[0-9]+$",
-                                    "validationMessage": "The value must be numbers."
+                                    "required": true
+                                }
+                            },
+                            {
+                                "name": "cloudAuthPwd",
+                                "type": "Microsoft.Common.PasswordBox",
+                                "label": {
+                                    "password": "Password of Elasticsearch Service",
+                                    "confirmPassword": "Confirm password"
+                                },
+                                "toolTip": "The password of Elasticsearch Service on Elastic Cloud.",
+                                "constraints": {
+                                    "required": true
                                 }
                             }
                         ],
@@ -298,8 +306,9 @@
             "db2DBUserPwd": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DBUserPwd]",
             "db2DSJndiName": "[steps('DB2ServerConnectionConfig').connectionInfo.db2DSJndiName]",
             "connectToELK": "[bool(steps('ELKConnectionConfig').connectToELK)]",
-            "logStashServerName": "[steps('ELKConnectionConfig').connectionInfo.logStashServerName]",
-            "logStashServerPortNumber": "[steps('ELKConnectionConfig').connectionInfo.logStashServerPortNumber]"
+            "cloudId": "[steps('ELKConnectionConfig').connectionInfo.cloudId]",
+            "cloudAuthUser": "[steps('ELKConnectionConfig').connectionInfo.cloudAuthUser]",
+            "cloudAuthPwd": "[steps('ELKConnectionConfig').connectionInfo.cloudAuthPwd]"
         }
     }
 }
