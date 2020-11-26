@@ -26,7 +26,7 @@ filebeat.inputs:
 - type: log
   paths:
     - ${outLogPath}
-  json.message_key: ibm_datetime
+  json.message_key: message
   json.keys_under_root: true
   json.add_error_key: true
 
