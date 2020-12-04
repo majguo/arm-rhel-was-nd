@@ -1,4 +1,8 @@
 #!/bin/sh
+
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 # Parameters
 wasRootPath=$1 #Root path of WebSphere
 wasProfileName=$2 #WAS ND profile name

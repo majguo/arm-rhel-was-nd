@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 # Reference: https://raw.githubusercontent.com/keensoft/was-db2-docker/master/was/assets/create-datasource.jython
 
 # Get WAS server id as the parent ID for creating JDBC provider

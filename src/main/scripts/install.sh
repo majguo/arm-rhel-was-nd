@@ -1,4 +1,8 @@
 #!/bin/sh
+
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 while getopts "m:c:n:t:d:i:s:j:g:o:k:" opt; do
     case $opt in
         m)

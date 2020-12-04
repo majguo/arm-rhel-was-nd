@@ -1,4 +1,8 @@
 #!/bin/sh
+
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 # Parameters
 outLogPath=$1 #Log output path
 cloudId=$2 #Cloud ID of Elasticsearch Service on Elastic Cloud

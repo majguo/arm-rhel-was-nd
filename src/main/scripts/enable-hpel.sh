@@ -1,4 +1,8 @@
 #!/bin/sh
+
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 # Parameters
 wasProfilePath=$1 #WAS ND profile path
 wasServerName=$2 #WAS ND server name
