@@ -9,7 +9,7 @@
 
     <groupId>com.ibm.websphere.azure</groupId>
     <artifactId>arm-rhel-was-nd</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     
     <parent>
         <groupId>com.microsoft.azure.iaas</groupId>

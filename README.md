@@ -3,14 +3,15 @@
 ## Prerequisites
  - Register an [Azure subscription](https://azure.microsoft.com/en-us/)
  - The virtual machine offer which includes the image of RHEL7.4, IBM WebSphere & JDK is used as image reference to deploy virtual machine on Azure. Before the offer goes live in Azure Marketplace, your Azure subscription needs to be added into white list to successfully deploy VM using ARM template of this repo.
- - Install [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
- - Install [PowerShell Core](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-6)
- - Install Maven
+ - Install [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest)
+ - Install [PowerShell Core](https://docs.microsoft.com/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7.1)
+ - Install [Maven](https://maven.apache.org/download.cgi)
+ - Install [`jq`](https://stedolan.github.io/jq/download/)
 
  ## Steps of deployment
  1. Checkout [azure-javaee-iaas](https://github.com/Azure/azure-javaee-iaas)
     - change to directory hosting the repo project & run `mvn clean install`
- 2. Checkout [azure-quickstart-templates](https://github.com/Azure/azure-quickstart-templates) under the specified parent directory
+ 2. Checkout [arm-ttk](https://github.com/Azure/arm-ttk) under the specified parent directory
  3. Checkout this repo under the same parent directory and change to directory hosting the repo project
  4. Build the project by replacing all placeholder `${<place_holder>}` with valid values
     - connect to DB2 Server & Elastic Stack
