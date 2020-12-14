@@ -124,7 +124,7 @@ parametersJson=$( echo "$parametersJson" | jq -c '.' )
 #Start deployment
 echo "Starting deployment..."
 (
-	az group deployment create --name "$deploymentName" --resource-group "$resourceGroupName" \
+	az deployment group create --name "$deploymentName" --resource-group "$resourceGroupName" \
 		--template-file "$templateFilePath" --parameters "$parametersJson"
 )
 

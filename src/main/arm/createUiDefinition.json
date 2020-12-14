@@ -184,7 +184,9 @@
                                 "label": "Databae name",
                                 "toolTip": "The database name of a pre-existing IBM DB2 Server.",
                                 "constraints": {
-                                    "required": true                                
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z]{1,30}$",
+                                    "validationMessage": "The value must be 1-30 characters long and must only contain letters and numbers."
                                 }
                             },
                             {
@@ -193,7 +195,9 @@
                                 "label": "Username of database",
                                 "toolTip": "The database username of a pre-existing IBM DB2 Server.",
                                 "constraints": {
-                                    "required": true
+                                    "required": true,
+                                    "regex": "^(?!\\-)([a-z0-9A-Z@\\-]{1,128})([^\\-])$",
+                                    "validationMessage": "The value must be 1-128 characters long and must only contain letters, numbers, hyphen(-) and the at sign, no hyphen allowed at the beginning and the end of Database Username."
                                 }
                             },
                             {
@@ -213,7 +217,12 @@
                                 "type": "Microsoft.Common.TextBox",
                                 "label": "Data source JNDI name",
                                 "defaultValue": "jdbc/Sample",
-                                "toolTip": "The JNDI name of the data source to be created."
+                                "toolTip": "The JNDI name of the data source to be created.",
+                                "constraints": {
+                                    "required": false,
+                                    "regex": "^[a-z0-9A-Z/]{1,30}$",
+                                    "validationMessage": "The value must be 1-30 characters long and must only contain letters and numbers."
+                                }
                             }
                         ],
                         "visible": "[bool(steps('DB2ServerConnectionConfig').connectToDB2Server)]"
@@ -260,7 +269,9 @@
                                 "label": "Cloud ID of Elasticsearch Service",
                                 "toolTip": "The Cloud ID of Elasticsearch Service on Elastic Cloud.",
                                 "constraints": {
-                                    "required": true
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z:\\-]+$",
+                                    "validationMessage": "The value must only contain letters, numbers, colon and dash."
                                 }
                             },
                             {
@@ -269,7 +280,9 @@
                                 "label": "Username of Elasticsearch Service",
                                 "toolTip": "The user name of Elasticsearch Service on Elastic Cloud.",
                                 "constraints": {
-                                    "required": true
+                                    "required": true,
+                                    "regex": "^[a-z0-9A-Z]+$",
+                                    "validationMessage": "The value must only contain letters and numbers."
                                 }
                             },
                             {
