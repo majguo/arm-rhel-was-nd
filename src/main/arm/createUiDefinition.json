@@ -181,7 +181,7 @@
                             {
                                 "name": "db2DBName",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "Databae name",
+                                "label": "Database name",
                                 "toolTip": "The database name of a pre-existing IBM DB2 Server.",
                                 "constraints": {
                                     "required": true,
