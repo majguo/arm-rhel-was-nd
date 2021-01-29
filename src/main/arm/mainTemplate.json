@@ -99,23 +99,22 @@
         }
     },
     "variables": {
-        "virtualMachineName": "[concat('wasVM', take(replace(parameters('guidValue'),'-',''),6))]",
-        "dnsLabelPrefix": "[concat(parameters('dnsLabelPrefix'), take(replace(parameters('guidValue'),'-',''),6))]",
-        "virtualNetworkName": "[concat(variables('dnsLabelPrefix'), '-vnet')]",
-        "networkSecurityGroupName": "[concat(variables('dnsLabelPrefix'), '-nsg')]",
-        "networkInterfaceName": "[concat(variables('virtualMachineName'), '-if')]",
-        "publicIPAddressName": "[concat(variables('virtualMachineName'), '-ip')]",
-        "diskName": "[concat(variables('virtualMachineName'), '-disk')]",
-        "publicIPAddressRef": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]",
-        "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), parameters('subnetName'))]",
-        "networkSecurityGroupRef": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
-        "networkInterfaceRef": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]",
-        "virtualNetworkRef": "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
-        "virtualMachineRef": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]",
-        "scriptLocation": "[uri(parameters('_artifactsLocation'), 'scripts/')]",
-        "arguments1": "[concat(' -m ',parameters('adminUser'),' -c ',parameters('adminPwd'))]",
-        "arguments2": "[if(parameters('connectToDB2Server'),concat(' -n \"',parameters('db2ServerName'),'\" -t ',parameters('db2ServerPortNumber'),' -d ',parameters('db2DBName'),' -i ',parameters('db2DBUserName'),' -s ',parameters('db2DBUserPwd'),' -j ',parameters('db2DSJndiName')),' -n  -t  -d  -i  -s  -j ')]",
-        "arguments3": "[if(parameters('connectToELK'),concat(' -g ',parameters('cloudId'),' -o ',parameters('cloudAuthUser'),' -k ',parameters('cloudAuthPwd')),' -g  -o  -k ')]"
+        "const_arguments1": "[concat(' -m ',parameters('adminUser'),' -c ',parameters('adminPwd'))]",
+        "const_arguments2": "[if(parameters('connectToDB2Server'),concat(' -n \"',parameters('db2ServerName'),'\" -t ',parameters('db2ServerPortNumber'),' -d ',parameters('db2DBName'),' -i ',parameters('db2DBUserName'),' -s ',parameters('db2DBUserPwd'),' -j ',parameters('db2DSJndiName')),' -n  -t  -d  -i  -s  -j ')]",
+        "const_arguments3": "[if(parameters('connectToELK'),concat(' -g ',parameters('cloudId'),' -o ',parameters('cloudAuthUser'),' -k ',parameters('cloudAuthPwd')),' -g  -o  -k ')]",
+        "const_dnsLabelPrefix": "[concat(parameters('dnsLabelPrefix'), take(replace(parameters('guidValue'),'-',''),6))]",
+        "const_scriptLocation": "[uri(parameters('_artifactsLocation'), 'scripts/')]",
+        "name_networkInterface": "[concat(variables('name_virtualMachine'), '-if')]",
+        "name_networkSecurityGroup": "[concat(variables('const_dnsLabelPrefix'), '-nsg')]",
+        "name_publicIPAddress": "[concat(variables('name_virtualMachine'), '-ip')]",
+        "name_virtualMachine": "[concat('wasVM', take(replace(parameters('guidValue'),'-',''),6))]",
+        "name_virtualNetwork": "[concat(variables('const_dnsLabelPrefix'), '-vnet')]",
+        "ref_networkInterface": "[resourceId('Microsoft.Network/networkInterfaces', variables('name_networkInterface'))]",
+        "ref_networkSecurityGroup": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('name_networkSecurityGroup'))]",
+        "ref_publicIPAddress": "[resourceId('Microsoft.Network/publicIPAddresses', variables('name_publicIPAddress'))]",
+        "ref_subnet": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('name_virtualNetwork'), parameters('subnetName'))]",
+        "ref_virtualMachine": "[resourceId('Microsoft.Compute/virtualMachines', variables('name_virtualMachine'))]",
+        "ref_virtualNetwork": "[resourceId('Microsoft.Network/virtualNetworks', variables('name_virtualNetwork'))]"
     },
     "resources": [
         {
@@ -135,7 +134,7 @@
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-06-01",
-            "name": "[variables('networkSecurityGroupName')]",
+            "name": "[variables('name_networkSecurityGroup')]",
             "location": "[parameters('location')]",
             "properties": {
                 "securityRules": [
@@ -163,10 +162,10 @@
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-06-01",
-            "name": "[variables('virtualNetworkName')]",
+            "name": "[variables('name_virtualNetwork')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[variables('networkSecurityGroupRef')]"
+                "[variables('ref_networkSecurityGroup')]"
             ],
             "properties": {
                 "addressSpace": {
@@ -181,38 +180,38 @@
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2019-06-01",
-            "name": "[concat(variables('virtualNetworkName'), '/', parameters('subnetName'))]",
+            "name": "[concat(variables('name_virtualNetwork'), '/', parameters('subnetName'))]",
             "dependsOn": [
-                "[variables('virtualNetworkRef')]",
-                "[variables('networkSecurityGroupRef')]"
+                "[variables('ref_virtualNetwork')]",
+                "[variables('ref_networkSecurityGroup')]"
             ],
             "properties": {
                 "addressPrefix": "[parameters('subnetAddressPrefix')]",
                 "networkSecurityGroup": {
-                    "id": "[variables('networkSecurityGroupRef')]"
+                    "id": "[variables('ref_networkSecurityGroup')]"
                 }
             }
         },                
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2019-06-01",
-            "name": "[variables('publicIPAddressName')]",
+            "name": "[variables('name_publicIPAddress')]",
             "location": "[parameters('location')]",
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
-                    "domainNameLabel": "[variables('dnsLabelPrefix')]"
+                    "domainNameLabel": "[variables('const_dnsLabelPrefix')]"
                 }
             }
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-06-01",
-            "name": "[variables('networkInterfaceName')]",
+            "name": "[variables('name_networkInterface')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[variables('publicIPAddressRef')]",
-                "[variables('subnetRef')]"
+                "[variables('ref_publicIPAddress')]",
+                "[variables('ref_subnet')]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -221,10 +220,10 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[variables('publicIPAddressRef')]"
+                                "id": "[variables('ref_publicIPAddress')]"
                             },
                             "subnet": {
-                                "id": "[variables('subnetRef')]"
+                                "id": "[variables('ref_subnet')]"
                             }
                         }
                     }
@@ -237,10 +236,10 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-03-01",
-            "name": "[variables('virtualMachineName')]",
+            "name": "[variables('name_virtualMachine')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[variables('networkInterfaceRef')]"
+                "[variables('ref_networkInterface')]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -254,7 +253,7 @@
                         "version": "9.0.5"
                     },
                     "osDisk": {
-                        "name": "[variables('diskName')]",
+                        "name": "[concat(variables('name_virtualMachine'), '-disk')]",
                         "createOption": "FromImage",
                         "managedDisk": {
                             "storageAccountType": "[parameters('osDiskType')]"
@@ -262,14 +261,14 @@
                     }
                 },
                 "osProfile": {
-                    "computerName": "[variables('virtualMachineName')]",
+                    "computerName": "[variables('name_virtualMachine')]",
                     "adminUsername": "[parameters('vmAdminId')]",
                     "adminPassword": "[parameters('vmAdminPwd')]"
                 },
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[variables('networkInterfaceRef')]"
+                            "id": "[variables('ref_networkInterface')]"
                         }
                     ]
                 }
@@ -283,10 +282,10 @@
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2019-03-01",
-            "name": "[concat(variables('virtualMachineName'), '/CustomScript')]",
+            "name": "[concat(variables('name_virtualMachine'), '/CustomScript')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[variables('virtualMachineRef')]"
+                "[variables('ref_virtualMachine')]"
             ],
             "properties": {
                 "autoUpgradeMinorVersion": true,
@@ -295,14 +294,14 @@
                 "typeHandlerVersion": "2.0",
                 "settings": {
                     "fileUris": [
-                        "[uri(variables('scriptLocation'), concat('install.sh', parameters('_artifactsLocationSasToken')))]",
-                        "[uri(variables('scriptLocation'), concat('create-ds.sh', parameters('_artifactsLocationSasToken')))]",
-                        "[uri(variables('scriptLocation'), concat('create-ds.py', parameters('_artifactsLocationSasToken')))]",
-                        "[uri(variables('scriptLocation'), concat('enable-hpel.sh', parameters('_artifactsLocationSasToken')))]",
-                        "[uri(variables('scriptLocation'), concat('enable-hpel.py', parameters('_artifactsLocationSasToken')))]",
-                        "[uri(variables('scriptLocation'), concat('setup-filebeat.sh', parameters('_artifactsLocationSasToken')))]"
+                        "[uri(variables('const_scriptLocation'), concat('install.sh', parameters('_artifactsLocationSasToken')))]",
+                        "[uri(variables('const_scriptLocation'), concat('create-ds.sh', parameters('_artifactsLocationSasToken')))]",
+                        "[uri(variables('const_scriptLocation'), concat('create-ds.py', parameters('_artifactsLocationSasToken')))]",
+                        "[uri(variables('const_scriptLocation'), concat('enable-hpel.sh', parameters('_artifactsLocationSasToken')))]",
+                        "[uri(variables('const_scriptLocation'), concat('enable-hpel.py', parameters('_artifactsLocationSasToken')))]",
+                        "[uri(variables('const_scriptLocation'), concat('setup-filebeat.sh', parameters('_artifactsLocationSasToken')))]"
                     ],
-                    "commandToExecute": "[concat('sh install.sh', variables('arguments1'), variables('arguments2'), variables('arguments3'))]"
+                    "commandToExecute": "[concat('sh install.sh', variables('const_arguments1'), variables('const_arguments2'), variables('const_arguments3'))]"
                 }
             }
         }
@@ -310,7 +309,7 @@
     "outputs": {
         "adminSecuredConsole": {
             "type": "string",
-            "value": "[concat('https://',reference(variables('publicIPAddressName')).dnsSettings.fqdn,':9043/ibm/console')]"
+            "value": "[concat('https://',reference(variables('name_publicIPAddress')).dnsSettings.fqdn,':9043/ibm/console')]"
         }
     }
 }
