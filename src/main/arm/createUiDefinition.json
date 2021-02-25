@@ -91,7 +91,9 @@
                                 },
                                 "toolTip": "Password for admin account of Virtual Machine",
                                 "constraints": {
-                                    "required": true
+                                    "required": true,
+                                    "regex": "^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])|(?=.*[0-9])(?=.*[a-z])(?=.*[!@#$%^&*])|(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])|(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])).{12,72}$",
+                                    "validationMessage": "Password must be at least 12 characters long and have 3 out of the following: one number, one lower case, one upper case, or one special character."
                                 }
                             },
                             {
