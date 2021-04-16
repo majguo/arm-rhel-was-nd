@@ -52,29 +52,57 @@ while getopts "m:c:n:t:d:i:s:j:g:o:k:" opt; do
     esac
 done
 
+# Check whether the user is entitled or not
+while [ ! -f "/var/log/cloud-init-was.log" ]
+do
+    echo "waiting for was entitlement check started..."
+    sleep 5
+done
+
+isDone=false
+while [ $isDone = false ]
+do
+    result=`(tail -n1) </var/log/cloud-init-was.log`
+    if [[ $result = Unentitled ]] || [[ $result = Entitled ]]; then
+        isDone=true
+    else
+        echo "waiting for was entitlement check completed..."
+        sleep 5
+    fi
+done
+echo $result
+
+# Terminate the process for the un-entitled user
+if [ ${result} = Unentitled ]; then
+    exit 1
+fi
+
+# WebSphere installation directory pre-set by the base image
+tWASDirectory=/datadrive/IBM/WebSphere/ND/V9
+
 # Create standalone application profile
-/opt/IBM/WebSphere/ND/V9/bin/manageprofiles.sh -create -profileName AppSrv1 -templatePath /opt/IBM/WebSphere/ND/V9/profileTemplates/default \
+${tWASDirectory}/bin/manageprofiles.sh -create -profileName AppSrv1 -templatePath ${tWASDirectory}/profileTemplates/default \
     -hostName $(hostname) -nodeName $(hostname)Node01 -enableAdminSecurity true -adminUserName "$adminUserName" -adminPassword "$adminPassword"
 
 # Add credentials to "soap.client.props" so they can be read by relative commands if required
-soapClientProps=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/properties/soap.client.props
+soapClientProps=${tWASDirectory}/profiles/AppSrv1/properties/soap.client.props
 sed -i "s/com.ibm.SOAP.securityEnabled=false/com.ibm.SOAP.securityEnabled=true/g" "$soapClientProps"
 sed -i "s/com.ibm.SOAP.loginUserid=/com.ibm.SOAP.loginUserid=${adminUserName}/g" "$soapClientProps"
 sed -i "s/com.ibm.SOAP.loginPassword=/com.ibm.SOAP.loginPassword=${adminPassword}/g" "$soapClientProps"
 # Encrypt com.ibm.SOAP.loginPassword
-/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/PropFilePasswordEncoder.sh "$soapClientProps" com.ibm.SOAP.loginPassword
+${tWASDirectory}/profiles/AppSrv1/bin/PropFilePasswordEncoder.sh "$soapClientProps" com.ibm.SOAP.loginPassword
 
 # Create and start server
-/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/startServer.sh server1
+${tWASDirectory}/profiles/AppSrv1/bin/startServer.sh server1
 
 # Configure JDBC provider and data soruce for IBM DB2 Server if required
 if [ ! -z "$db2ServerName" ] && [ ! -z "$db2ServerPortNumber" ] && [ ! -z "$db2DBName" ] && [ ! -z "$db2DBUserName" ] && [ ! -z "$db2DBUserPwd" ]; then
-    ./create-ds.sh /opt/IBM/WebSphere/ND/V9 AppSrv1 server1 "$db2ServerName" "$db2ServerPortNumber" "$db2DBName" "$db2DBUserName" "$db2DBUserPwd" "$db2DSJndiName"
+    ./create-ds.sh ${tWASDirectory} AppSrv1 server1 "$db2ServerName" "$db2ServerPortNumber" "$db2DBName" "$db2DBUserName" "$db2DBUserPwd" "$db2DSJndiName"
 fi
 
 # Enable HPEL service if required
 if [ ! -z "$cloudId" ] && [ ! -z "$cloudAuthUser" ] && [ ! -z "$cloudAuthPwd" ]; then
-    ./enable-hpel.sh /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1 server1 /opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/hpelOutput.log was_logviewer
+    ./enable-hpel.sh ${tWASDirectory}/profiles/AppSrv1 server1 ${tWASDirectory}/profiles/AppSrv1/logs/server1/hpelOutput.log was_logviewer
 fi
 
 # Add systemd unit file for websphere.service
@@ -85,16 +113,16 @@ cat <<EOF > "$websphereSrv"
 Description=IBM WebSphere Application Server
 [Service]
 Type=forking
-ExecStart=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/startServer.sh server1
-ExecStop=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/stopServer.sh server1
-PIDFile=/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/server1.pid
+ExecStart=${tWASDirectory}/profiles/AppSrv1/bin/startServer.sh server1
+ExecStop=${tWASDirectory}/profiles/AppSrv1/bin/stopServer.sh server1
+PIDFile=${tWASDirectory}/profiles/AppSrv1/logs/server1/server1.pid
 SuccessExitStatus=143 0
 [Install]
 WantedBy=default.target
 EOF
 
 # Enable and start websphere service
-/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/bin/stopServer.sh server1
+${tWASDirectory}/profiles/AppSrv1/bin/stopServer.sh server1
 systemctl daemon-reload
 systemctl enable "$srvName"
 systemctl start "$srvName"
@@ -102,7 +130,7 @@ systemctl start "$srvName"
 # Start HPEL service and distribute log to ELK Stack if required
 if [ ! -z "$cloudId" ] && [ ! -z "$cloudAuthUser" ] && [ ! -z "$cloudAuthPwd" ]; then
     systemctl start was_logviewer
-    ./setup-filebeat.sh "/opt/IBM/WebSphere/ND/V9/profiles/AppSrv1/logs/server1/hpelOutput*.log" "$cloudId" "$cloudAuthUser" "$cloudAuthPwd"
+    ./setup-filebeat.sh "${tWASDirectory}/profiles/AppSrv1/logs/server1/hpelOutput*.log" "$cloudId" "$cloudAuthUser" "$cloudAuthPwd"
 fi
 
 # Open ports by adding iptables rules

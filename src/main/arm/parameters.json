@@ -8,6 +8,15 @@
         "dnsLabelPrefix":{
             "value": "${dnsLabelPrefix}"
         },
+        "ibmUserId": {
+            "value": "${ibmUserId}"
+        },
+        "ibmUserPwd": {
+            "value": "${ibmUserPwd}"
+        },
+        "vmImageId": {
+            "value": "${vmImageId}"
+        },
         "vmAdminId": {
             "value": "${vmAdminId}"
         },

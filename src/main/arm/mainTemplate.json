@@ -17,6 +17,18 @@
         "dnsLabelPrefix": {
             "type": "string"
         },
+        "ibmUserId": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "ibmUserPwd": {
+            "defaultValue": "",
+            "type": "securestring"
+        },
+        "vmImageId": {
+            "defaultValue": "",
+            "type": "string"
+        },
         "vmSize": {
             "defaultValue": "Standard_D2_v3",
             "type": "string"
@@ -235,7 +247,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2019-03-01",
+            "apiVersion": "2020-06-01",
             "name": "[variables('name_virtualMachine')]",
             "location": "[parameters('location')]",
             "dependsOn": [
@@ -247,10 +259,7 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "publisher": "microsoft_javaeeonazure_test",
-                        "offer": "rhel74-was-jdk-preview",
-                        "sku": "905",
-                        "version": "9.0.5"
+                        "id": "[parameters('vmImageId')]"
                     },
                     "osDisk": {
                         "name": "[concat(variables('name_virtualMachine'), '-disk')]",
@@ -258,12 +267,23 @@
                         "managedDisk": {
                             "storageAccountType": "[parameters('osDiskType')]"
                         }
-                    }
+                    },
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "createOption": "FromImage",
+                            "diskSizeGB": 1023,
+                            "managedDisk": {
+                                "storageAccountType": "Standard_LRS"
+                            }
+                        }
+                    ]
                 },
                 "osProfile": {
                     "computerName": "[variables('name_virtualMachine')]",
                     "adminUsername": "[parameters('vmAdminId')]",
-                    "adminPassword": "[parameters('vmAdminPwd')]"
+                    "adminPassword": "[parameters('vmAdminPwd')]",
+                    "customData": "[base64(concat(parameters('ibmUserId'), ',', parameters('ibmUserPwd')))]"
                 },
                 "networkProfile": {
                     "networkInterfaces": [
@@ -281,7 +301,7 @@
         },
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "2019-03-01",
+            "apiVersion": "2020-06-01",
             "name": "[concat(variables('name_virtualMachine'), '/CustomScript')]",
             "location": "[parameters('location')]",
             "dependsOn": [
