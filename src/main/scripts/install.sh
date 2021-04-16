@@ -111,10 +111,11 @@ websphereSrv=/etc/systemd/system/${srvName}.service
 cat <<EOF > "$websphereSrv"
 [Unit]
 Description=IBM WebSphere Application Server
+RequiresMountsFor=/datadrive
 [Service]
 Type=forking
-ExecStart=${tWASDirectory}/profiles/AppSrv1/bin/startServer.sh server1
-ExecStop=${tWASDirectory}/profiles/AppSrv1/bin/stopServer.sh server1
+ExecStart=/bin/sh -c "${tWASDirectory}/profiles/AppSrv1/bin/startServer.sh server1"
+ExecStop=/bin/sh -c "${tWASDirectory}/profiles/AppSrv1/bin/stopServer.sh server1"
 PIDFile=${tWASDirectory}/profiles/AppSrv1/logs/server1/server1.pid
 SuccessExitStatus=143 0
 [Install]
