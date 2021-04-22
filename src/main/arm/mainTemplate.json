@@ -25,10 +25,6 @@
             "defaultValue": "",
             "type": "securestring"
         },
-        "vmImageId": {
-            "defaultValue": "",
-            "type": "string"
-        },
         "vmSize": {
             "defaultValue": "Standard_D2_v3",
             "type": "string"
@@ -259,7 +255,10 @@
                 },
                 "storageProfile": {
                     "imageReference": {
-                        "id": "[parameters('vmImageId')]"
+                        "publisher": "microsoft_javaeeonazure_test",
+                        "offer": "2021-zheng-image-offer-preview",
+                        "sku": "2021-zheng-rhel-with-websphere",
+                        "version": "latest"
                     },
                     "osDisk": {
                         "name": "[concat(variables('name_virtualMachine'), '-disk')]",
@@ -292,6 +291,11 @@
                         }
                     ]
                 }
+            },
+            "plan": {
+                "name": "2021-zheng-rhel-with-websphere",
+                "publisher": "microsoft_javaeeonazure_test",
+                "product": "2021-zheng-image-offer-preview"
             }
         },
         {
