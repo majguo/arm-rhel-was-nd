@@ -3,10 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "_artifactsLocation": {
-            "value": "${artifactsLocationBase}/${project.artifactId}/${git.tag}/src/main/"
-        },
-        "dnsLabelPrefix":{
-            "value": "${dnsLabelPrefix}"
+            "value": "${artifactsLocationBase}/src/main/"
         },
         "ibmUserId": {
             "value": "${ibmUserId}"
@@ -14,50 +11,26 @@
         "ibmUserPwd": {
             "value": "${ibmUserPwd}"
         },
-        "vmAdminId": {
-            "value": "${vmAdminId}"
+        "vmSize": {
+            "value": "${vmSize}"
         },
-        "vmAdminPwd": {
-            "value": "${vmAdminPwd}"
+        "dnsLabelPrefix":{
+            "value": "${dnsLabelPrefix}"
         },
-        "adminUser": {
-            "value": "${adminUser}"
+        "adminUsername": {
+            "value": "${adminUsername}"
         },
-        "adminPwd": {
-            "value": "${adminPwd}"
+        "adminPasswordOrKey": {
+            "value": "${adminPasswordOrKey}"
         },
-        "connectToDB2Server": {
-            "value": "${connectToDB2Server}"
+        "authenticationType": {
+            "value": "${authenticationType}"
         },
-        "db2ServerName": {
-            "value": "${db2ServerName}"
+        "wasUsername": {
+            "value": "${wasUsername}"
         },
-        "db2ServerPortNumber": {
-            "value": "${db2ServerPortNumber}"
-        },
-        "db2DBName": {
-            "value": "${db2DBName}"
-        },
-        "db2DBUserName": {
-            "value": "${db2DBUserName}"
-        },
-        "db2DBUserPwd": {
-            "value": "${db2DBUserPwd}"
-        },
-        "db2DSJndiName": {
-            "value": "${db2DSJndiName}"
-        },
-        "connectToELK": {
-            "value": "${connectToELK}"
-        },
-        "cloudId": {
-            "value": "${cloudId}"
-        },
-        "cloudAuthUser": {
-            "value": "${cloudAuthUser}"
-        },
-        "cloudAuthPwd": {
-            "value": "${cloudAuthPwd}"
+        "wasPassword": {
+            "value": "${wasPassword}"
         }
     }
 }

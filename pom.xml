@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
      Copyright (c) Microsoft Corporation.
 
@@ -19,13 +18,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ibm.websphere.azure</groupId>
-    <artifactId>arm-rhel-was-nd</artifactId>
-    <version>1.0.10</version>
+    <artifactId>azure.websphere-traditional.singleserver</artifactId>
+    <version>1.0.0</version>
     
     <parent>
         <groupId>com.microsoft.azure.iaas</groupId>
         <artifactId>azure-javaee-iaas-parent</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.13</version>
         <relativePath></relativePath>
     </parent>
     
@@ -33,8 +32,20 @@
     <name>${project.artifactId}</name>
 
     <properties>
-        <!-- `tracking.pid` is deprecated, use `template.pid.properties.url` & `template.microsoft.pid.properties.url` instead -->
-        <tracking.pid>pid-c4a3e490-f7bc-5ed1-a0ba-0e4ed4fe024f</tracking.pid>
         <test.parameters>-TestParameter '@{&quot;PasswordMinLength&quot;=6}'</test.parameters>
+        <git.repo>WASdev</git.repo>
+        <artifactsLocationBase>https://raw.githubusercontent.com/${git.repo}/${project.artifactId}/${git.tag}</artifactsLocationBase>
+        <azure.apiVersion>2020-06-01</azure.apiVersion>
+        <customer.usage.attribution.id>pid-1a2a9b5a-6c82-42de-a938-9fdb6ffe8e55-partnercenter</customer.usage.attribution.id>
+        <singleserver.start>c2efe274-0dc2-50f3-b51f-338a3fe01afb</singleserver.start>
+        <singleserver.end>9c5dbfce-a6b9-5659-96bc-ca0cf429122a</singleserver.end>
+        <!-- This is the "Partner ID" in Partner Center" -->
+        <image.publisher>microsoft_javaeeonazure_test</image.publisher>
+        <!-- This is the twas "Offer ID" of the "Azure Virtual Machine" offer type -->
+        <twas.image.offer>2021-zheng-image-offer-preview</twas.image.offer>
+        <!-- This is the twas "Plan ID" of the plan within the "Azure Virtual Machine" offer -->
+        <twas.image.sku>2021-zheng-rhel-with-was-base</twas.image.sku>
+        <!-- This is the twas "Disk version" of the VM image of the plan within the "Azure Virtual Machine" offer -->
+        <twas.image.version>9.0.20211222</twas.image.version>
     </properties>
 </project>
