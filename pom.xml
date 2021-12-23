@@ -37,8 +37,8 @@
         <artifactsLocationBase>https://raw.githubusercontent.com/${git.repo}/${project.artifactId}/${git.tag}</artifactsLocationBase>
         <azure.apiVersion>2020-06-01</azure.apiVersion>
         <customer.usage.attribution.id>pid-1a2a9b5a-6c82-42de-a938-9fdb6ffe8e55-partnercenter</customer.usage.attribution.id>
-        <singleserver.start>c2efe274-0dc2-50f3-b51f-338a3fe01afb</singleserver.start>
-        <singleserver.end>9c5dbfce-a6b9-5659-96bc-ca0cf429122a</singleserver.end>
+        <singleserver.start>0dd3f110-4c7f-5292-a624-954cc19f7c49</singleserver.start>
+        <singleserver.end>b82321d6-35d9-5b24-b158-1d32a234bd71</singleserver.end>
         <!-- This is the "Partner ID" in Partner Center" -->
         <image.publisher>microsoft_javaeeonazure_test</image.publisher>
         <!-- This is the twas "Offer ID" of the "Azure Virtual Machine" offer type -->

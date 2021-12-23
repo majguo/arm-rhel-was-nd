@@ -357,6 +357,14 @@
         "adminSecuredConsole": {
             "type": "string",
             "value": "[concat('https://',reference(variables('name_publicIPAddress')).dnsSettings.fqdn,':9043/ibm/console')]"
+        },
+        "snoopServletUrl": {
+            "type": "string",
+            "value": "[concat('https://',reference(variables('name_publicIPAddress')).dnsSettings.fqdn,':9443/snoop')]"
+        },
+        "hitCountServletUrl": {
+            "type": "string",
+            "value": "[concat('https://',reference(variables('name_publicIPAddress')).dnsSettings.fqdn,':9443/hitcount')]"
         }
     }
 }
